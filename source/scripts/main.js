@@ -24,6 +24,8 @@ import {reduceToObject} from 'scripts/helpers';
 import * as reducers from 'scripts/reducers';
 import App from 'scripts/containers/App';
 
+Parse.initialize('2JF8yrgsM5H261Gju4rzKfxFurDZluOfWUq9UnCV', 'xlirVc4ZbYnah6b97WEo4mbOUBvi0RiqZj5GJ9Hi');
+
 // Configure Redux Store
 // ---------------------
 //
