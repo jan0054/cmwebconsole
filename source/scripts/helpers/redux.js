@@ -8,8 +8,12 @@
 //
 // ### NPM Modules
 
-import {keys} from 'bound-native-methods/object';
 import {createAction} from 'redux-actions';
+
+// ### Local Modules
+
+import {reduceToObject} from 'scripts/helpers/misc';
+import {is} from 'scripts/helpers/method-virtualizer';
 
 // Export Module
 // -------------
@@ -20,9 +24,13 @@ export default {
 
   // > `createActions` : Function
 
-  createActions (...actionNames) {
-    return actionNames.reduce((actions, actionName) => {
-      actions[actionName] = createAction(actionName);
+  createActions (...actionDefinitions) {
+    return actionDefinitions.reduce((actions, actionDefinition) => {
+      if (actionDefinition::is.object()) {
+        actions = actionDefinition::reduceToObject((payloadCreator, actionName) => createAction(actionName, payloadCreator), actions);
+      } else if (actionDefinition::is.string()) {
+        actions[actionDefinition] = createAction(actionDefinition);
+      }
 
       return actions;
     }, {});
@@ -31,14 +39,9 @@ export default {
   // > `createReducers` : Function
 
   createReducers (schema, defaultState) {
-    return schema::keys().reduce((reducers, stateName) => {
-      reducers[stateName] = (state = defaultState[stateName], action) => {
-        let transitions = schema[stateName];
-
-        return transitions.hasOwnProperty(action.type) ? transitions[action.type](state, action) : state;
-      };
-
-      return reducers;
-    }, {});
+    return schema::reduceToObject((transitions, stateName) =>
+      (state = defaultState[stateName], action) =>
+        transitions.hasOwnProperty(action.type) ? transitions[action.type](state, action) : state
+    );
   }
 };

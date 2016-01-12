@@ -13,5 +13,8 @@ export default {
     example: {
       count: 0
     }
+  },
+
+  defaultFormValues: {
   }
 };

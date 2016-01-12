@@ -9,6 +9,6 @@
 #
 # 3. Install required Node.js local packages
 
-git flow init -d
-npm install -g npm-check-updates babel-eslint semistandard
-npm install
+# git flow init -d
+# npm install -g npm-check-updates babel-eslint semistandard
+# npm install

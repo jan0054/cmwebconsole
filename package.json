@@ -1,11 +1,11 @@
 {
-  "name": "",
+  "name": "cmwebconsole",
   "private": true,
   "version": "0.0.0",
   "description": "",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/jan0054/cmwebconsole.git"
   },
   "scripts": {
     "init": "./commands/init",
@@ -16,22 +16,24 @@
     "start": "./commands/start"
   },
   "dependencies": {
-    "babel-core": "^5.8.25",
+    "babel-core": "^5.8.30",
     "bound-native-methods": "^0.1.6",
-    "isomorphic-fetch": "^2.1.1",
+    "isomorphic-fetch": "^2.2.0",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
-    "classnames": "^2.1.5",
-    "redux": "^3.0.2",
+    "classnames": "^2.2.0",
+    "redux": "^3.0.4",
     "redux-actions": "^0.8.0",
-    "redux-thunk": "^1.0.0",
     "redux-promise": "^0.5.0",
-    "react-redux": "^3.1.0",
-    "normalize.css": "^3.0.3"
+    "react-redux": "^4.0.0",
+    "redux-form": "^3.0.0-beta-2",
+    "redux-localstorage": "1.0.0-rc4",
+    "redux-localstorage-filter": "^0.1.1",
+    "is": "^3.1.0"
   },
   "devDependencies": {
     "webpack": "^1.12.2",
-    "babel-runtime": "^5.8.25",
+    "babel-runtime": "^5.8.29",
     "babel-loader": "^5.3.2",
     "express": "^4.13.3",
     "webpack-dev-middleware": "^1.2.0",
@@ -41,11 +43,11 @@
     "react-transform-catch-errors": "^1.0.0",
     "redbox-react": "^1.1.1",
     "redux-devtools": "^2.1.5",
-    "redux-logger": "^2.0.3",
+    "redux-logger": "^2.0.4",
     "husky": "^0.10.1"
   },
   "engines": {
-    "node": ">=4.1.0"
+    "node": ">=5.4.0"
   },
   "babel": {
     "stage": 0,
@@ -73,26 +75,5 @@
   },
   "semistandard": {
     "parser": "babel-eslint"
-  },
-  "#comments": {
-    "scripts": {
-      "init": ["", "$ npm run init"],
-      "update": ["", "$ npm run update"],
-      "test": ["", "$ npm test"],
-      "start": ["", "$ npm start"]
-    },
-    "dependencies": {
-      "babel-core": ["ECMAScript 2015+", "babel-core/polyfill"],
-      "react": ["React"],
-      "redux": ["Redux"],
-      "normalize.css": ["CSS"]
-    },
-    "devDependencies": {
-      "webpack": ["Webpack"],
-      "express": ["Development Server"],
-      "babel-plugin-react-transform": ["Hot Reload"],
-      "redux-devtools": ["DevTools"],
-      "husky": ["Git Hooks"]
-    }
   }
 }

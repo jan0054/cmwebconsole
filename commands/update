@@ -12,5 +12,5 @@
 # 3. Install required Node.js local packages back
 
 rm -rf node_modules
-ncu -a
+# ncu -a
 npm install
