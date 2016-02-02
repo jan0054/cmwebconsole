@@ -31,6 +31,6 @@ export default createReducers({
   },
 
   data: {
-    login: (state, action) => !!action.payload.id ? action.payload : {}
+    login: (state, action) => action.payload.id ? action.payload : {}
   }
 }, defaultState.user);
