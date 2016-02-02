@@ -27,6 +27,14 @@ export default createActions(
       } catch (error) {
         return error;
       }
+    },
+
+    logout: async () => {
+      try {
+        await Parse.User.logOut();
+      } catch (error) {
+        return error;
+      }
     }
   }
 );

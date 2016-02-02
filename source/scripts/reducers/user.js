@@ -27,10 +27,14 @@ export default createReducers({
   // See also https://issue.kkcorp/trac/wiki/ServerApi/Login#login-status-behavior.
 
   isLoggedIn: {
-    login: (state, action) => !!action.payload.id
+    login: (state, action) => !!action.payload.id,
+
+    logout: (state, action) => false
   },
 
   data: {
-    login: (state, action) => action.payload.id ? action.payload : {}
+    login: (state, action) => action.payload.id ? action.payload : {},
+
+    logout: (state, action) => ({})
   }
 }, defaultState.user);
