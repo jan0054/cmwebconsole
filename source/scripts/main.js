@@ -14,6 +14,7 @@ import {render} from 'react-dom';
 import {compose, applyMiddleware, createStore, combineReducers} from 'redux';
 import ReduxPromise from 'redux-promise';
 import createLogger from 'redux-logger';
+import {reducer as formReducer} from 'redux-form';
 import {Provider} from 'react-redux';
 import Parse from 'parse';
 
@@ -53,11 +54,7 @@ function configureStore (initialState) {
   )(
     combineReducers(
       defaultState::reduceToObject((_, stateName) => combineReducers(reducers[stateName]), {
-/*
-        form: formReducer.plugin({
-          lyricsEditor: reducers.form.lyricsEditor
-        })
-*/
+        form: formReducer
       })
     ),
 

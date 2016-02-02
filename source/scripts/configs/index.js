@@ -10,11 +10,16 @@
 
 export default {
   defaultState: {
-    example: {
-      count: 0
+    user: {
+      isLoggedIn: false,
+      data: {}
     }
   },
 
   defaultFormValues: {
+    login: {
+      email: '',
+      password: ''
+    }
   }
 };
