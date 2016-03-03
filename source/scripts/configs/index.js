@@ -13,6 +13,10 @@ export default {
     user: {
       isLoggedIn: false,
       data: {}
+    },
+
+    events: {
+      data: []
     }
   },
 
