@@ -28,6 +28,14 @@ export default {
     login: {
       email: '',
       password: ''
+    },
+
+    editor: {
+      name: '',
+      organizer: '',
+      start_time: '',
+      end_time: '',
+      content: ''
     }
   }
 };

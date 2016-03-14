@@ -1,5 +1,8 @@
 import React from 'react';
 
+import {is} from 'scripts/helpers';
+import Editor from 'scripts/components/Editor';
+
 export default class Dashboard extends React.Component {
   static propTypes = {
     input: React.PropTypes.object.isRequired,
@@ -17,8 +20,8 @@ export default class Dashboard extends React.Component {
 
   render () {
     const {
-      input: {events},
-      actions: {setupEditor}
+      input: {events, editor},
+      actions: {setupEditor, saveEditor}
     } = this.props;
 
     return (
@@ -40,6 +43,14 @@ export default class Dashboard extends React.Component {
           </li>
         )}
         </ul>
+      {!editor.event::is.empty() &&
+        <Editor
+          input = {{
+            event: editor.event
+          }}
+          actions = {{saveEditor}}
+        />
+      }
       </main>
     );
   }
