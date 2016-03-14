@@ -17,7 +17,8 @@ export default class Dashboard extends React.Component {
 
   render () {
     const {
-      input: {events}
+      input: {events},
+      actions: {setupEditor}
     } = this.props;
 
     return (
@@ -27,7 +28,15 @@ export default class Dashboard extends React.Component {
           <li
             key = {event.id}
           >
-            {event.id}
+            <a
+              style = {{
+                textDecoration: 'underline',
+                cursor: 'pointer'
+              }}
+              onClick = {() => setupEditor(event)}
+            >
+              {event.get('name')}
+            </a>
           </li>
         )}
         </ul>
