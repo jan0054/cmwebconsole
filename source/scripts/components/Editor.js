@@ -82,14 +82,15 @@ export default class Editor extends React.Component {
               userEvent.preventDefault();
 
               saveEditor({
+                event,
+
                 fields: {
-                  name: name.value,
-                  organizer: organizer.value,
-                  start_time: start_time.value,
-                  end_time: end_time.value,
-                  content: content.value
-                },
-                event
+                  name: name.value || event.get('name'),
+                  organizer: organizer.value || event.get('organizer'),
+                  start_time: start_time.value || event.get('start_time'),
+                  end_time: end_time.value || event.get('end_time'),
+                  content: content.value || event.get('content')
+                }
               });
             }}
           >
