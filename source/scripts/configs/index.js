@@ -13,6 +13,20 @@ export default {
     user: {
       isLoggedIn: false,
       data: {}
+    },
+
+    events: {
+      data: []
+    },
+
+    editor: {
+      event: {},
+      announcement: [],
+      session: [],
+      talk: [],
+      person: [],
+      location: [],
+      venue: []
     }
   },
 
@@ -20,6 +34,16 @@ export default {
     login: {
       email: '',
       password: ''
+    },
+
+    editor: {
+      event: {
+        name: '',
+        organizer: '',
+        start_time: '',
+        end_time: '',
+        content: ''
+      }
     }
   }
 };

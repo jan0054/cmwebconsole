@@ -27,14 +27,21 @@ import Support from 'scripts/components/Support';
 export default @connect(state => state, actions) class App extends React.Component {
   static propTypes = {
     user: React.PropTypes.object.isRequired,
+    events: React.PropTypes.object.isRequired,
+    editor: React.PropTypes.object.isRequired,
     login: React.PropTypes.func.isRequired,
-    logout: React.PropTypes.func.isRequired
+    logout: React.PropTypes.func.isRequired,
+    getEvents: React.PropTypes.func.isRequired,
+    setupEditor: React.PropTypes.func.isRequired,
+    saveEditor: React.PropTypes.func.isRequired
   }
 
   render () {
     const {
       user,
-      login, logout
+      events,
+      editor,
+      login, logout, getEvents, setupEditor, saveEditor
     } = this.props;
 
     return (
@@ -50,7 +57,14 @@ export default @connect(state => state, actions) class App extends React.Compone
             actions = {{logout}}
           />
 
-        : <Dashboard/>
+        : <Dashboard
+            input = {{
+              user: user.data,
+              events: events.data,
+              editor
+            }}
+            actions = {{getEvents, setupEditor, saveEditor}}
+          />
         }
       </div>
     );
