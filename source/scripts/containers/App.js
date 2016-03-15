@@ -61,7 +61,7 @@ export default @connect(state => state, actions) class App extends React.Compone
             input = {{
               user: user.data,
               events: events.data,
-              editor: editor
+              editor
             }}
             actions = {{getEvents, setupEditor, saveEditor}}
           />

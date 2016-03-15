@@ -20,7 +20,13 @@ export default {
     },
 
     editor: {
-      event: {}
+      event: {},
+      announcement: [],
+      session: [],
+      talk: [],
+      person: [],
+      location: [],
+      venue: []
     }
   },
 
@@ -31,11 +37,13 @@ export default {
     },
 
     editor: {
-      name: '',
-      organizer: '',
-      start_time: '',
-      end_time: '',
-      content: ''
+      event: {
+        name: '',
+        organizer: '',
+        start_time: '',
+        end_time: '',
+        content: ''
+      }
     }
   }
 };

@@ -46,7 +46,7 @@ export default class Dashboard extends React.Component {
       {!editor.event::is.empty() &&
         <Editor
           input = {{
-            event: editor.event
+            editor
           }}
           actions = {{saveEditor}}
         />
