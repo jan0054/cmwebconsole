@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+
+  <title>Data upload</title>
+  <meta name="description" content="CM Web">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
+  <script type="text/javascript" src="js/CSJSRequestObject.js"></script>
+  <script type="text/javascript" src="js/lang_zh.js"></script>
+  <script type="text/javascript" src="js/common.js"></script>
+
+  <script language="javascript">
+  function addCareer()
+  {
+    //check required fields
+  	if(career_institution.value==""){
+		alert(STR_careerinstitution+AL_empty);
+		career_institution.focus();
+		return false;
+	}
+  	if(career_contactname.value==""){
+		alert(STR_contactname+AL_empty);
+		career_contactname.focus();
+		return false;
+	}
+  	if(career_contactemail.value==""){
+		alert(STR_contactemail+AL_empty);
+		career_contactemail.focus();
+		return false;
+	}
+  	if(career_content.value==""){
+		alert(STR_careercontent+AL_empty);
+		career_content.focus();
+		return false;
+	}
+	Parse.initialize(K1, K2);
+	ListItem = Parse.Object.extend("Career");
+
+	var itemcheck = new Parse.Query(ListItem);
+    itemcheck.equalTo("objectId", career_id.value);
+	itemcheck.find({
+		success: function(results){
+			var object;
+			if(results.length>0) {
+				object=results[0];				
+			}
+			else{
+				object = new ListItem();
+			}
+			object.set("institution", career_institution.value);
+			object.set("contact_name", career_contactname.value);
+			object.set("contact_email", career_contactemail.value);
+			object.set("content", career_content.value);
+			object.set("hiring", parseInt(career_hiring.value));
+			object.set("link", career_link.value);
+
+			Person = Parse.Object.extend("Person");
+			var person = new Person();
+			person.id = K4;
+			object.set("author", person);
+
+			object.save(null, {
+				success: function(object){
+					window.location = "addcareer.html?id=null";
+					parent.listFrame.location = "list.html?type=career";
+				},
+				error: function(object, error){
+					alert('Failed to create new object, with error code: ' + error.message);
+				}
+			});
+		},
+		error: function(error){
+			alert('Failed to search object, with error code: ' + error.message);
+		}
+	});
+  }
+  var careerid = Request.QueryString("id");
+  function searchCareer()
+  {
+	var selected = new Array();
+	Parse.initialize(K1, K2);
+	ListItem = Parse.Object.extend("Career");
+
+	var itemcheck = new Parse.Query(ListItem);
+    itemcheck.equalTo('objectId', career_id.value);
+	itemcheck.descending('createdAt');
+	itemcheck.find({
+		success: function(results){
+			if(results.length>0) {
+				var object=results[0];
+				career_institution.value = object.get('institution');
+				career_contactname.value = object.get('contact_name');
+				career_contactemail.value = object.get('contact_email');
+				career_content.value = object.get('content');
+				career_hiring.value = object.get('hiring');
+				career_link.value = object.get('link');
+			}
+			else{
+				alert('This is a new career!');
+			}
+		},
+		error: function(error){
+			alert('Failed to search object, with error code: ' + error.message);
+		}
+	});
+  }
+  function loadId()
+  {
+  	if(careerid != 'null')
+  	{
+  		career_id.value = careerid;
+  		searchCareer();
+  	}
+  }
+  </script>
+</head>
+
+<body>
+	<h1><script>dw(TT_addcareer)</script></h1>
+	<h2><script>dw(STR_1)</script></h2>
+
+	<div id="add_career">
+		<table align="center">
+			<tr>
+				<td>*<script>dw(STR_careerinstitution)</script></td>
+				<td><input class="InputSize" type="text" id="career_institution"></td>
+			</tr>
+			<tr>
+				<td>*<script>dw(STR_contactname)</script></td>
+				<td><input class="InputSize"type="text" id="career_contactname"></td>
+			</tr>
+			<tr>
+				<td>*<script>dw(STR_contactemail)</script></td>
+				<td><input class="InputSize" type="text" id="career_contactemail"></td>
+			</tr>
+			<tr>
+				<td>*<script>dw(STR_hiring)</script></td>
+				<td width="70%">
+					<select class="SelectSize" id="career_hiring">
+					<option selected value="1"><script>dw(OPT_career_available)</script></option>
+					<option value="0"><script>dw(OPT_career_seeking)</script></option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td><script>dw(STR_website)</script></td>
+				<td><input class="InputSize" type="text" id="career_link"></td>
+			</tr>
+			<tr>
+				<td>*<script>dw(STR_careercontent)</script></td>
+				<td><textarea class="textAreaSize" id="career_content"></textarea></td>
+			</tr>
+			<tr>
+			<td colspan=2 class="ApplyButton"><script>dw('<input type="button" id="add_career_submit" value="'+BT_add+'/'+BT_modify+'" onClick="addCareer();">')</script></td>
+			</tr>
+			</tr><td><input class="InputSize" type="hidden" id="career_id"></td></tr>
+		</table>
+	</div>
+	<script>loadId();</script>
+</body>
+ 

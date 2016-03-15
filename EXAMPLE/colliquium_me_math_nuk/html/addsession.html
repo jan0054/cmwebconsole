@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+
+  <title>Data upload</title>
+  <meta name="description" content="CM Web">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
+  <script type="text/javascript" src="js/CSJSRequestObject.js"></script>
+  <script type="text/javascript" src="js/lang_zh.js"></script>
+  <script type="text/javascript" src="js/common.js"></script>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <!-- cdn for modernizr, if you haven't included it already -->
+  <script src="http://cdn.jsdelivr.net/webshim/1.12.4/extras/modernizr-custom.js"></script>
+  <!-- polyfiller file to detect and load polyfills -->
+  <script src="http://cdn.jsdelivr.net/webshim/1.12.4/polyfiller.js"></script>
+  <script>
+  webshims.setOptions('waitReady', false);
+  webshims.setOptions('forms-ext', {types: 'date'});
+  webshims.polyfill('forms forms-ext');
+  </script>
+
+
+  <script language="javascript">
+  function addSession()
+  {
+  	if(session_name.value==""){
+		alert(STR_name+AL_empty);
+		session_name.focus();
+		return false;
+	}
+	Parse.initialize(K1, K2);
+	ListItem = Parse.Object.extend("Session");
+
+	var itemcheck = new Parse.Query(ListItem);
+    itemcheck.equalTo("objectId", session_id.value);
+	itemcheck.find({
+		success: function(results){
+			var object;
+			if(results.length>0) {
+				object=results[0];				
+			}
+			else{
+				object = new ListItem();
+			}
+			object.set("name", session_name.value);
+			var sd=session_datestart.value+'T'+session_timestart.value+':00.000'+GMTTIME;
+			var startd = new Date(sd);
+			var ed=session_dateend.value+'T'+session_timeend.value+':00.000'+GMTTIME;
+			var endd = new Date(ed);
+			object.set("start_time", startd);
+			object.set("end_time", endd);
+
+			Loca = Parse.Object.extend("Location");
+			var loca = new Loca();
+			loca.id = session_location.value;
+			object.set("location", loca);
+
+			Event = Parse.Object.extend("Event");
+			var event = new Event();
+			event.id = K3;
+			object.set("event", event);
+	
+			object.save(null, {
+				success: function(object){
+					window.location = "addsession.html?id=null";
+					parent.listFrame.location = "list.html?type=session";
+				},
+				error: function(object, error){
+					alert('Failed to create new object, with error code: ' + error.message);
+				}
+			});
+		},
+		error: function(error){
+			alert('Failed to search object, with error code: ' + error.message);
+		}
+	});
+  }
+
+  var sessionid = Request.QueryString("id");
+  function searchSession()
+  {
+	var selected = new Array();
+	Parse.initialize(K1, K2);
+	ListItem = Parse.Object.extend("Session");
+
+	var itemcheck = new Parse.Query(ListItem);
+    itemcheck.equalTo('objectId', session_id.value);
+	itemcheck.ascending('name');
+	itemcheck.include('location');
+	itemcheck.find({
+		success: function(results){
+			if(results.length>0) {
+				var object=results[0];
+				session_name.value = object.get('name');
+				session_location.value = object.get('location').id;
+				session_datestart.value = (object.get('start_time').getFullYear()+'-'+("0"+(1+object.get('start_time').getMonth())).substr(-2)+'-'+("0"+object.get('start_time').getDate()).substr(-2));
+				session_dateend.value = (object.get('end_time').getFullYear()+'-'+("0"+(1+object.get('end_time').getMonth())).substr(-2)+'-'+("0"+object.get('end_time').getDate()).substr(-2));
+				session_timestart.value = (("0"+object.get('start_time').getHours()).substr(-2)+':'+("0"+object.get('start_time').getMinutes()).substr(-2));
+				session_timeend.value = (("0"+object.get('end_time').getHours()).substr(-2)+':'+("0"+object.get('end_time').getMinutes()).substr(-2));
+			}
+			else{
+				alert('This is a new session!');
+			}
+		},
+		error: function(error){
+			alert('Failed to search object, with error code: ' + error.message);
+		}
+	});
+  }
+  function loadId()
+  {
+  	if(sessionid != 'null')
+  	{
+  		session_id.value = sessionid;
+  		searchSession();
+  	}
+  }
+  </script>
+</head>
+
+<body>
+	<h1><script>dw(TT_addsession)</script></h1>
+	<h2><script>dw(STR_1)</script></h2>
+	<div id="add_session">
+		<table align="center">
+			<tr>
+				<td>*<script>dw(STR_name)</script></td>
+				<td><input class="InputSize"type="text" id="session_name"></td>
+			</tr>
+			<tr>
+				<td>*<script>dw(STR_start)</script></td>
+				<td><input type="date" class="DateSize2" id="session_datestart">-<input type="time" class="TimeSize2" id="session_timestart" ></td>
+			</tr>
+			<tr>
+				<td>*<script>dw(STR_end)</script></td>
+				<td><input type="date" class="DateSize2" id="session_dateend">-<input type="time" class="TimeSize2" id="session_timeend"></td>
+			</tr>
+			<tr>
+				<td>*<script>dw(STR_location)</script></td>
+				<td width="70%"><select class="SelectSize" id="session_location"><script>selectGetLocationWithEvent('session_location')</script></select></td>
+			<tr>
+			<tr>
+				<td colspan=2 class="ApplyButton"><script>dw('<input type="button" id="add_session_submit" value="'+BT_add+'/'+BT_modify+'" onClick="addSession();">')</script></td>
+			</tr>
+			</tr><td><input class="InputSize" type="hidden" id="session_id"></td></tr>
+		</table>
+	</div>
+	<script>loadId();</script>
+</body>
+ 

@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+
+  <title>Data upload</title>
+  <meta name="description" content="CM Parse Web">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
+  <script type="text/javascript" src="js/CSJSRequestObject.js"></script>
+  <script language="javascript" src="js/lang_zh.js"></script>
+  <script type="text/javascript" src="js/common.js"></script>
+  <script>
+  var type = Request.QueryString("type");
+  var title;
+  function loadPage()
+  {
+  	if(type == "empty") title = TT_list;
+  	else if(type == "location") title = TT_listlocation;
+  	else if(type == "session") title = TT_listsession;
+  	else if(type == "person") title = TT_listperson;
+  	else if(type == "talk") title = TT_listtalk;
+  	else if(type == "venue") title = TT_listvenue;
+  	else if(type == "announce") title = TT_listannounce;
+  	else if(type == "career") title = TT_listcareer;
+  	else if(type == "pdf") title = TT_listtalkpdf;
+  	else title = TT_list;
+  }
+
+  function loadList()
+  {
+  	if(title == TT_listlocation) {
+	  	listGetLocationWithEvent('listresult');
+  	}
+  	else if(title == TT_listsession) {
+	  	listGetSessionWithEvent('listresult');
+	}
+  	else if(title == TT_listperson) {
+	  	listGetAuthorWithEvent('listresult');
+	}
+  	else if(title == TT_listtalk) {
+	  	listGetTalkWithEvent('listresult');
+	}
+  	else if(title == TT_listvenue) {
+	  	listGetVenueWithEvent('listresult');
+	}
+  	else if(title == TT_listannounce) {
+	  	listGetAnnounceWithAuthorAndEvent('listresult');
+	}
+  	else if(title == TT_listcareer) {
+	  	listGetCareerWithAuthor('listresult');
+	}
+	else if(title == TT_listtalkpdf) {
+		listGetTalkPdfWithEvent('listresult');
+	}
+  }
+  </script>
+</head>
+
+<body>
+
+	<h3 id="listtitle"><u><script>loadPage();dw(title);</script></u></h3>
+	<ul id="listresult" class="ulitems"></li><script>loadList();</script>
+	</ul>
+
+</body>
+ 
