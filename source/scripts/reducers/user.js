@@ -6,6 +6,10 @@
 // Import Modules
 // --------------
 //
+// ### NPM Modules
+
+import Parse from 'parse';
+
 // ### Local Modules
 
 import {defaultState} from 'scripts/configs';
@@ -27,13 +31,13 @@ export default createReducers({
   // See also https://issue.kkcorp/trac/wiki/ServerApi/Login#login-status-behavior.
 
   isLoggedIn: {
-    login: (state, action) => !!action.payload.id,
+    login: (state, action) => action.payload instanceof Parse.User,
 
     logout: (state, action) => false
   },
 
   data: {
-    login: (state, action) => action.payload.id ? action.payload : {},
+    login: (state, action) => action.payload instanceof Parse.User ? action.payload : {},
 
     logout: (state, action) => ({})
   }

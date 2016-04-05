@@ -26,6 +26,7 @@ import Support from 'scripts/components/Support';
 
 export default @connect(state => state, actions) class App extends React.Component {
   static propTypes = {
+    UI: React.PropTypes.object.isRequired,
     user: React.PropTypes.object.isRequired,
     events: React.PropTypes.object.isRequired,
     editor: React.PropTypes.object.isRequired,
@@ -38,6 +39,7 @@ export default @connect(state => state, actions) class App extends React.Compone
 
   render () {
     const {
+      UI,
       user,
       events,
       editor,
@@ -46,26 +48,29 @@ export default @connect(state => state, actions) class App extends React.Compone
 
     return (
       <div>
-        {
-          !(user.data instanceof Parse.User)
-        ? <Login
-            onSubmit = {formData => login(formData)}
-          />
+      {
+        !(user.data instanceof Parse.User)
+      ? <Login
+          input = {{
+            UI: UI.Login
+          }}
+          onSubmit = {formData => login(formData)}
+        />
 
-        : !user.data.get('is_admin')
-        ? <Support
-            actions = {{logout}}
-          />
+      : !user.data.get('is_admin')
+      ? <Support
+          actions = {{logout}}
+        />
 
-        : <Dashboard
-            input = {{
-              user: user.data,
-              events: events.data,
-              editor
-            }}
-            actions = {{getEvents, setupEditor, saveEditor}}
-          />
-        }
+      : <Dashboard
+          input = {{
+            user: user.data,
+            events: events.data,
+            editor
+          }}
+          actions = {{getEvents, setupEditor, saveEditor}}
+        />
+      }
       </div>
     );
   }

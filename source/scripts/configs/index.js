@@ -10,6 +10,12 @@
 
 export default {
   defaultState: {
+    UI: {
+      Login: {
+        hasError: false
+      }
+    },
+
     user: {
       isLoggedIn: false,
       data: {}

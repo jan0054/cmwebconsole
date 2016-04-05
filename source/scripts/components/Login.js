@@ -9,6 +9,7 @@
 // ### NPM Modules
 
 import React from 'react';
+import classnames from 'classnames';
 import {reduxForm as connectForm} from 'redux-form';
 
 // ### Local Modules
@@ -28,6 +29,7 @@ export default
 })
 class Login extends React.Component {
   static propTypes = {
+    input: React.PropTypes.object.isRequired,
     fields: React.PropTypes.object.isRequired,
     handleSubmit: React.PropTypes.func.isRequired
   }
@@ -39,20 +41,55 @@ class Login extends React.Component {
   // See also https://github.com/erikras/redux-form#-handlesubmit--function.
 
   render () {
-    const {fields: {email, password}, handleSubmit} = this.props;
+    const {
+      input: {UI},
+      fields: {email, password},
+      handleSubmit
+    } = this.props;
 
     return (
-      <form onSubmit = {handleSubmit}>
-        <input
-          {...email}
-          placeholder = 'Email'
-        />
-        <input
-          {...password}
-          type = 'password'
-          placeholder = 'Password'
-        />
-        <button>Login</button>
+      <form
+        onSubmit = {handleSubmit}
+      >
+        <div className = 'row'>
+          <div className = 'columns'>
+            <h1
+              className = 'text-center'
+              style = {{
+                margin: '60px 0 60px 0'
+              }}
+            >Colloquium.me Admin Dashboard</h1>
+          </div>
+        </div>
+        <div className = 'row'>
+          <div className = 'columns small-8 small-centered'>
+            <input
+              {...email}
+              type = 'text'
+              placeholder = 'Your Email'
+            />
+          </div>
+        </div>
+        <div className = 'row'>
+          <div className = 'columns small-8 small-centered'>
+            <input
+              {...password}
+              type = 'password'
+              placeholder = 'Your Password'
+            />
+          </div>
+        </div>
+        <div className = 'row'>
+          <div className = 'columns small-8 small-centered'>
+            <button
+              className = {classnames('expanded button', {
+                alert: UI.hasError
+              })}
+            >
+              {UI.hasError ? 'Incorrect Login Information' : 'Login'}
+            </button>
+          </div>
+        </div>
       </form>
     );
   }

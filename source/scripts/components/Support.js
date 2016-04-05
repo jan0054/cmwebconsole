@@ -11,9 +11,22 @@ export default class Support extends React.Component {
     } = this.props;
 
     return (
-      <div>
-        <p>Your account does not have admin privilege. Please contact someone for support.</p>
-        <button onClick = {logout}>Logout</button>
+      <div className = 'row'>
+        <div className = 'columns small-8 small-centered'>
+          <div className = 'callout warning'>
+            <p>
+              Your account does not have admin privilege. Please
+              <a href = 'mailto:jan0054@gmail.com'> contact support </a>
+              for assistance.
+            </p>
+            <button
+              className = 'expanded button'
+              onClick = {logout}
+            >
+              Logout
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
