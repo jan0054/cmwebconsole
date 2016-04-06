@@ -28,7 +28,7 @@ export default @connect(state => state, actions) class App extends React.Compone
   static propTypes = {
     UI: React.PropTypes.object.isRequired,
     user: React.PropTypes.object.isRequired,
-    events: React.PropTypes.object.isRequired,
+    conferences: React.PropTypes.object.isRequired,
     editor: React.PropTypes.object.isRequired,
     login: React.PropTypes.func.isRequired,
     logout: React.PropTypes.func.isRequired,
@@ -41,15 +41,14 @@ export default @connect(state => state, actions) class App extends React.Compone
     const {
       UI,
       user,
-      events,
+      conferences,
       editor,
       login, logout, getEvents, setupEditor, saveEditor
     } = this.props;
 
     return (
       <div>
-      {
-        !(user.data instanceof Parse.User)
+      { !(user.data instanceof Parse.User)
       ? <Login
           input = {{
             UI: UI.Login
@@ -65,10 +64,10 @@ export default @connect(state => state, actions) class App extends React.Compone
       : <Dashboard
           input = {{
             user: user.data,
-            events: events.data,
+            conferences: conferences.data,
             editor
           }}
-          actions = {{getEvents, setupEditor, saveEditor}}
+          actions = {{logout, getEvents, setupEditor, saveEditor}}
         />
       }
       </div>

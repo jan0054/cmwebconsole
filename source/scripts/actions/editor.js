@@ -3,9 +3,9 @@ import {createActions} from 'scripts/helpers';
 export default createActions(
   'setupEditor',
   {
-    saveEditor: async ({event, fields}) => {
+    saveEditor: async ({conference, fields}) => {
       try {
-        return await event.save(fields);
+        return await conference.save(fields);
       } catch (error) {
         return error;
       }

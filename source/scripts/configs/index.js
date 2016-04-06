@@ -21,12 +21,12 @@ export default {
       data: {}
     },
 
-    events: {
+    conferences: {
       data: []
     },
 
     editor: {
-      event: {},
+      conference: {},
       announcement: [],
       session: [],
       talk: [],
@@ -43,7 +43,7 @@ export default {
     },
 
     editor: {
-      event: {
+      conference: {
         name: '',
         organizer: '',
         start_time: '',

@@ -5,4 +5,4 @@ export default createReducers({
   data: {
     getEvents: (state, action) => action.payload
   }
-}, defaultState.events);
+}, defaultState.conferences);

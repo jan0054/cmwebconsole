@@ -10,6 +10,6 @@
 
 export * as UI from 'scripts/reducers/UI';
 export * as user from 'scripts/reducers/user';
-export * as events from 'scripts/reducers/events';
+export * as conferences from 'scripts/reducers/conferences';
 export * as editor from 'scripts/reducers/editor';
 // export * as form from 'scripts/reducers/form';

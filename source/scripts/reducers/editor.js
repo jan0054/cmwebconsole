@@ -2,7 +2,7 @@ import {defaultState} from 'scripts/configs';
 import {createReducers} from 'scripts/helpers';
 
 export default createReducers({
-  event: {
+  conference: {
     setupEditor: (state, action) => action.payload,
 
     saveEditor: (state, action) => ({})

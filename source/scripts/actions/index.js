@@ -10,6 +10,6 @@
 
 // export * from 'scripts/actions/UI';
 export * from 'scripts/actions/user';
-export * from 'scripts/actions/events';
+export * from 'scripts/actions/conferences';
 export * from 'scripts/actions/editor';
 // export * from 'scripts/actions/form';

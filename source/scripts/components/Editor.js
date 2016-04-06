@@ -6,7 +6,7 @@ import {defaultFormValues} from 'scripts/configs';
 @connectForm({
   form: 'eventEditor',
   fields: ['name', 'organizer', 'start_time', 'end_time', 'content'],
-  initialValues: defaultFormValues.editor.event
+  initialValues: defaultFormValues.editor.conference
 })
 export default class Editor extends React.Component {
   static propTypes = {
@@ -31,7 +31,7 @@ export default class Editor extends React.Component {
               <input
                 {...name}
                 placeholder = 'Name'
-                value = {name.value || editor.event.get('name')}
+                value = {name.value || editor.conference.get('name')}
               />
             </label>
           </div>
@@ -41,7 +41,7 @@ export default class Editor extends React.Component {
               <input
                 {...organizer}
                 placeholder = 'Organizer'
-                value = {organizer.value || editor.event.get('organizer')}
+                value = {organizer.value || editor.conference.get('organizer')}
               />
             </label>
           </div>
@@ -51,7 +51,7 @@ export default class Editor extends React.Component {
               <input
                 {...start_time}
                 placeholder = 'Start Time'
-                value = {start_time.value || editor.event.get('start_time')}
+                value = {start_time.value || editor.conference.get('start_time')}
               />
             </label>
           </div>
@@ -61,7 +61,7 @@ export default class Editor extends React.Component {
               <input
                 {...end_time}
                 placeholder = 'End Time'
-                value = {end_time.value || editor.event.get('end_time')}
+                value = {end_time.value || editor.conference.get('end_time')}
               />
             </label>
           </div>
@@ -71,7 +71,7 @@ export default class Editor extends React.Component {
               <input
                 {...content}
                 placeholder = 'Content'
-                value = {content.value || editor.event.get('content')}
+                value = {content.value || editor.conference.get('content')}
               />
             </label>
           </div>
@@ -82,14 +82,14 @@ export default class Editor extends React.Component {
               event.preventDefault();
 
               saveEditor({
-                event: editor.event,
+                conference: editor.conference,
 
                 fields: {
-                  name: name.value || editor.event.get('name'),
-                  organizer: organizer.value || editor.event.get('organizer'),
-                  start_time: start_time.value || editor.event.get('start_time'),
-                  end_time: end_time.value || editor.event.get('end_time'),
-                  content: content.value || editor.event.get('content')
+                  name: name.value || editor.conference.get('name'),
+                  organizer: organizer.value || editor.conference.get('organizer'),
+                  start_time: start_time.value || editor.conference.get('start_time'),
+                  end_time: end_time.value || editor.conference.get('end_time'),
+                  content: content.value || editor.conference.get('content')
                 }
               });
             }}

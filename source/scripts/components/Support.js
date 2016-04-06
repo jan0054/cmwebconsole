@@ -11,7 +11,12 @@ export default class Support extends React.Component {
     } = this.props;
 
     return (
-      <div className = 'row'>
+      <div
+        className = 'row'
+        style = {{
+          margin: '60px 0 0 0'
+        }}
+      >
         <div className = 'columns small-8 small-centered'>
           <div className = 'callout warning'>
             <p>
