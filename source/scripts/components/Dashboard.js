@@ -3,7 +3,7 @@ import classnames from 'classnames';
 
 import {is} from 'scripts/helpers';
 import Navbar from 'scripts/components/Navbar';
-import Editor from 'scripts/components/Editor';
+import ConferenceEditor from 'scripts/components/ConferenceEditor';
 
 export default class Dashboard extends React.Component {
   static propTypes = {
@@ -42,6 +42,18 @@ export default class Dashboard extends React.Component {
         >
           <div className = 'columns small-3'>
             <ul className = 'menu vertical'>
+              <li>
+                <a
+                  style = {{
+                    color: 'inherit',
+                    cursor: 'default'
+                  }}
+                >
+                  <strong>
+                    Your Conferences
+                  </strong>
+                </a>
+              </li>
             {conferences.map(conference =>
               <li
                 key = {conference.id}
@@ -69,7 +81,7 @@ export default class Dashboard extends React.Component {
             }}
           >
           {!editor.conference::is.empty() &&
-            <Editor
+            <ConferenceEditor
               input = {{
                 editor
               }}

@@ -27,12 +27,15 @@ export default class Dashboard extends React.Component {
           <div className = 'columns small-4'>
             <div className = 'top-bar-right'>
               <ul className = 'menu'>
-                <li
-                  style = {{
-                    padding: '0 16px 0 0'
-                  }}
-                >
-                  {`${user.get('first_name')} ${user.get('last_name')}`}
+                <li>
+                  <a
+                    style = {{
+                      color: 'inherit',
+                      cursor: 'default'
+                    }}
+                  >
+                    {`${user.get('first_name')} ${user.get('last_name')}`}
+                  </a>
                 </li>
                 <li>
                   <button

@@ -23,9 +23,9 @@ import {defaultFormValues} from 'scripts/configs';
 
 export default
 @connectForm({
-  form: 'login',
+  form: 'Login',
   fields: ['email', 'password'],
-  initialValues: defaultFormValues.login
+  initialValues: defaultFormValues.Login
 })
 class Login extends React.Component {
   static propTypes = {

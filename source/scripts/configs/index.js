@@ -37,19 +37,20 @@ export default {
   },
 
   defaultFormValues: {
-    login: {
+    Login: {
       email: '',
       password: ''
     },
 
-    editor: {
-      conference: {
-        name: '',
-        organizer: '',
-        start_time: '',
-        end_time: '',
-        content: ''
-      }
+    ConferenceEditor: {
+      name: '',
+      organizer: '',
+      _startDate: '',
+      _startTime: '',
+      _endDate: '',
+      _endTime: '',
+      parentEvent: '',
+      content: ''
     }
   }
 };
