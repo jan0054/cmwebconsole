@@ -32,9 +32,10 @@ export default @connect(state => state, actions) class App extends React.Compone
     editor: React.PropTypes.object.isRequired,
     login: React.PropTypes.func.isRequired,
     logout: React.PropTypes.func.isRequired,
-    getEvents: React.PropTypes.func.isRequired,
-    setupEditor: React.PropTypes.func.isRequired,
-    saveEditor: React.PropTypes.func.isRequired
+    getConferences: React.PropTypes.func.isRequired,
+    setupConferenceEditor: React.PropTypes.func.isRequired,
+    clearConferenceEditor: React.PropTypes.func.isRequired,
+    saveConference: React.PropTypes.func.isRequired
   }
 
   render () {
@@ -43,7 +44,7 @@ export default @connect(state => state, actions) class App extends React.Compone
       user,
       conferences,
       editor,
-      login, logout, getEvents, setupEditor, saveEditor
+      login, logout, getConferences, setupConferenceEditor, clearConferenceEditor, saveConference
     } = this.props;
 
     return (
@@ -67,7 +68,7 @@ export default @connect(state => state, actions) class App extends React.Compone
             conferences: conferences.data,
             editor
           }}
-          actions = {{logout, getEvents, setupEditor, saveEditor}}
+          actions = {{logout, getConferences, setupConferenceEditor, clearConferenceEditor, saveConference}}
         />
       }
       </div>

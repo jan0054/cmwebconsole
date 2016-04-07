@@ -2,9 +2,9 @@ import {defaultState} from 'scripts/configs';
 import {createReducers} from 'scripts/helpers';
 
 export default createReducers({
-  conference: {
-    setupEditor: (state, action) => action.payload,
+  conferenceId: {
+    setupConferenceEditor: (state, action) => action.payload.conferenceId,
 
-    saveEditor: (state, action) => ({})
+    saveConference: (state, action) => ''
   }
 }, defaultState.editor);

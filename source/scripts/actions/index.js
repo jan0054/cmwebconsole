@@ -12,4 +12,4 @@
 export * from 'scripts/actions/user';
 export * from 'scripts/actions/conferences';
 export * from 'scripts/actions/editor';
-// export * from 'scripts/actions/form';
+export * from 'scripts/actions/form';

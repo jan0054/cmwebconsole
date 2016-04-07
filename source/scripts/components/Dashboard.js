@@ -1,7 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
 
-import {is} from 'scripts/helpers';
 import Navbar from 'scripts/components/Navbar';
 import ConferenceEditor from 'scripts/components/ConferenceEditor';
 
@@ -14,16 +13,16 @@ export default class Dashboard extends React.Component {
   componentDidMount () {
     const {
       input: {user},
-      actions: {getEvents}
+      actions: {getConferences}
     } = this.props;
 
-    getEvents({user});
+    getConferences({user});
   }
 
   render () {
     const {
       input: {user, conferences, editor},
-      actions: {logout, setupEditor, saveEditor}
+      actions: {logout, setupConferenceEditor, clearConferenceEditor, saveConference}
     } = this.props;
 
     return (
@@ -58,7 +57,7 @@ export default class Dashboard extends React.Component {
               <li
                 key = {conference.id}
                 className = {classnames({
-                  active: conference.id === editor.conference.id
+                  active: conference.id === editor.conferenceId
                 })}
               >
                 <a
@@ -66,7 +65,13 @@ export default class Dashboard extends React.Component {
                     textDecoration: 'underline',
                     cursor: 'pointer'
                   }}
-                  onClick = {() => setupEditor(conference)}
+                  onClick = {() => {
+                    setupConferenceEditor({
+                      conferenceId: conference.id
+                    });
+
+                    clearConferenceEditor();
+                  }}
                 >
                   {conference.get('name')}
                 </a>
@@ -80,12 +85,14 @@ export default class Dashboard extends React.Component {
               background: '#fff'
             }}
           >
-          {!editor.conference::is.empty() &&
+          {editor.conferenceId &&
             <ConferenceEditor
               input = {{
+                user,
+                conferences,
                 editor
               }}
-              actions = {{saveEditor}}
+              actions = {{saveConference}}
             />
           }
           </div>

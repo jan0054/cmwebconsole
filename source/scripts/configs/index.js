@@ -26,7 +26,7 @@ export default {
     },
 
     editor: {
-      conference: {},
+      conferenceId: '',
       announcement: [],
       session: [],
       talk: [],
