@@ -34,7 +34,7 @@ export default class Dashboard extends React.Component {
                       cursor: 'default'
                     }}
                   >
-                    {`${user.get('first_name')} ${user.get('last_name')}`}
+                    {user.get('first_name')} {user.get('last_name')}
                   </a>
                 </li>
                 <li>

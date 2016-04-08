@@ -15,9 +15,10 @@ export default class Dashboard extends React.Component {
   componentDidMount () {
     const {
       input: {user},
-      actions: {getConferences}
+      actions: {getPeople, getConferences}
     } = this.props;
 
+    getPeople();
     getConferences({user});
   }
 
@@ -25,7 +26,7 @@ export default class Dashboard extends React.Component {
     const {
       input: {
         user,
-        data: {conferences, tracks, talks, locations, venues},
+        data: {people, conferences, tracks, talks, locations, venues},
         editor
       },
       actions: {logout, setupConferenceEditor, clearConferenceEditor, saveConference, saveTrack, saveLocation, saveTalk}
@@ -125,7 +126,9 @@ export default class Dashboard extends React.Component {
                   key = {talk.id}
                   formKey = {talk.id}
                   input = {{
+                    user,
                     data: {
+                      people,
                       conferences,
                       track,
                       location,

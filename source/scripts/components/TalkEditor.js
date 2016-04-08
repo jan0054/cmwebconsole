@@ -7,7 +7,7 @@ import {defaultFormValues} from 'scripts/configs';
 
 @connectForm({
   form: 'TalkEditor',
-  fields: ['name', '_date', '_startTime', '_endTime', 'content'],
+  fields: ['name', '_authorId', '_date', '_startTime', '_endTime', 'content'],
   initialValues: defaultFormValues.TalkEditor
 })
 export default class TalkEditor extends React.Component {
@@ -20,11 +20,12 @@ export default class TalkEditor extends React.Component {
   render () {
     const {
       input: {
-        data: {conferences, track, location, talk},
+        user,
+        data: {people, conferences, track, location, talk},
         editor
       },
       actions: {saveTalk},
-      fields: {name, _date, _startTime, _endTime, content}
+      fields: {name, _authorId, _date, _startTime, _endTime, content}
     } = this.props;
 
     const conference = conferences.find(conference => conference.id === editor.conferenceId);
@@ -45,6 +46,33 @@ export default class TalkEditor extends React.Component {
                   type = 'text'
                   value = {name.touched ? name.value : talk.get('name')}
                 />
+              </label>
+            </div>
+          </div>
+          <div className = 'row'>
+            <div className = 'columns'>
+              <label>Speaker
+                <select
+                  {..._authorId}
+                  value = {
+                      _authorId.touched
+                    ? _authorId.value
+
+                    : talk.get('author')
+                    ? talk.get('author').id
+
+                    : user.get('person').id
+                  }
+                >
+                {people.map(person =>
+                  <option
+                    key = {person.id}
+                    value = {person.id}
+                  >
+                    {person.get('last_name')}, {person.get('first_name')}
+                  </option>
+                )}
+                </select>
               </label>
             </div>
           </div>
@@ -97,6 +125,8 @@ export default class TalkEditor extends React.Component {
                 onClick = {event => {
                   event.preventDefault();
 
+                  const author = people.find(person => person.id === _authorId.value);
+
                   saveTalk({
                     talk,
 
@@ -105,10 +135,11 @@ export default class TalkEditor extends React.Component {
                       start_time: Moment(`${_date.value} ${_startTime.value}`, 'YYYY-MM-DD HH:mm').toDate(),
                       end_time: Moment(`${_date.value} ${_endTime.value}`, 'YYYY-MM-DD HH:mm').toDate(),
                       content: content.value,
-                      type: 0,
+                      author,
                       event: conference,
                       session: track,
-                      location
+                      location,
+                      type: 0
                     }
                   });
                 }}

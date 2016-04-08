@@ -2,6 +2,10 @@ import {defaultState} from 'scripts/configs';
 import {createReducers} from 'scripts/helpers';
 
 export default createReducers({
+  people: {
+    getPeople: (state, action) => action.payload
+  },
+
   conferences: {
     getConferences: (state, action) => action.payload
   },

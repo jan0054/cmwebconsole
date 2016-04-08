@@ -11,6 +11,16 @@ export default createActions(
       } catch (error) {
         return error;
       }
+    },
+
+    getPeople: async () => {
+      try {
+        return await (new Parse.Query('Person').ascending('last_name')
+                                               .limit(1000))
+                                               .find();
+      } catch (error) {
+        return error;
+      }
     }
   }
 );

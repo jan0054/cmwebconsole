@@ -22,6 +22,7 @@ export default {
     },
 
     data: {
+      people: [],
       conferences: [],
       tracks: [],
       locations: [],
@@ -64,6 +65,12 @@ export default {
     },
 
     TalkEditor: {
+      name: '',
+      _authorId: '',
+      _date: '',
+      _startTime: '',
+      _endTime: '',
+      content: ''
     }
   }
 };
