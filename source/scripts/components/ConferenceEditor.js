@@ -6,7 +6,7 @@ import {defaultFormValues} from 'scripts/configs';
 
 @connectForm({
   form: 'ConferenceEditor',
-  fields: ['name', 'organizer', '_startDate', '_startTime', '_endDate', '_endTime', 'parentEvent', 'content'],
+  fields: ['name', 'organizer', '_startDate', '_startTime', '_endDate', '_endTime', '_parentEventId', 'content'],
   initialValues: defaultFormValues.ConferenceEditor
 })
 export default class ConferenceEditor extends React.Component {
@@ -20,7 +20,7 @@ export default class ConferenceEditor extends React.Component {
     const {
       input: {user, conferences, editor},
       actions: {saveConference},
-      fields: {name, organizer, _startDate, _startTime, _endDate, _endTime, parentEvent, content}
+      fields: {name, organizer, _startDate, _startTime, _endDate, _endTime, _parentEventId, content}
     } = this.props;
 
     const conference = conferences.find(conference => conference.id === editor.conferenceId);
@@ -96,10 +96,10 @@ export default class ConferenceEditor extends React.Component {
           <div className = 'columns'>
             <label>Parent Event
               <select
-                {...parentEvent}
+                {..._parentEventId}
                 value = {
-                  parentEvent.touched
-                  ? parentEvent.value
+                  _parentEventId.touched
+                  ? _parentEventId.value
 
                   : conference.get('parentEvent')
                   ? conference.get('parentEvent').id
@@ -108,7 +108,8 @@ export default class ConferenceEditor extends React.Component {
                 }
               >
                 <option></option>
-              {conferences.map(conference =>
+              {conferences.filter(conference => conference.id !== editor.conferenceId)
+                          .map(conference =>
                 <option
                   key = {conference.id}
                   value = {conference.id}
@@ -120,6 +121,23 @@ export default class ConferenceEditor extends React.Component {
             </label>
           </div>
         </div>
+      {conference.get('childrenEvent') &&
+        <div className = 'row'>
+          <div className = 'columns'>
+            <label>Subevents
+              <ul>
+              {conference.get('childrenEvent').map(conference =>
+                <li
+                  key = {conference.id}
+                >
+                  {conference.get('name')}
+                </li>
+              )}
+              </ul>
+            </label>
+          </div>
+        </div>
+      }
         <div className = 'row'>
           <div className = 'columns'>
             <label>Content
@@ -138,6 +156,8 @@ export default class ConferenceEditor extends React.Component {
               onClick = {event => {
                 event.preventDefault();
 
+                const parentEvent = conferences.find(conference => conference.id === _parentEventId.value) || null;
+
                 saveConference({
                   conference,
 
@@ -146,7 +166,7 @@ export default class ConferenceEditor extends React.Component {
                     organizer: organizer.value,
                     start_time: Moment(`${_startDate.value} ${_startTime.value}`, 'YYYY-MM-DD HH:mm').toDate(),
                     end_time: Moment(`${_endDate.value} ${_endTime.value}`, 'YYYY-MM-DD HH:mm').toDate(),
-                    parentEvent: conferences.find(conference => conference.id === parentEvent.value),
+                    parentEvent,
                     content: content.value,
                     admin: user
                   }
@@ -161,6 +181,8 @@ export default class ConferenceEditor extends React.Component {
               onClick = {event => {
                 event.preventDefault();
 
+                const parentEvent = conferences.find(conference => conference.id === _parentEventId.value);
+
                 saveConference({
                   conference,
 
@@ -169,7 +191,7 @@ export default class ConferenceEditor extends React.Component {
                     organizer: organizer.value,
                     start_time: Moment(`${_startDate.value} ${_startTime.value}`, 'YYYY-MM-DD HH:mm').toDate(),
                     end_time: Moment(`${_endDate.value} ${_endTime.value}`, 'YYYY-MM-DD HH:mm').toDate(),
-                    parentEvent: conferences.find(conference => conference.id === parentEvent.value),
+                    parentEvent,
                     content: content.value,
                     published: 1,
                     admin: user

@@ -49,7 +49,7 @@ export default {
       _startTime: '',
       _endDate: '',
       _endTime: '',
-      parentEvent: '',
+      _parentEventId: '',
       content: ''
     }
   }

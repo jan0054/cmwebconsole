@@ -25,7 +25,7 @@ export default createReducers({
       _startTime: {},
       _endDate: {},
       _endTime: {},
-      parentEvent: {},
+      _parentEventId: {},
       content: {}
     })
   }
