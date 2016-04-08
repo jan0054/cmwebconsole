@@ -28,23 +28,25 @@ export default @connect(state => state, actions) class App extends React.Compone
   static propTypes = {
     UI: React.PropTypes.object.isRequired,
     user: React.PropTypes.object.isRequired,
-    conferences: React.PropTypes.object.isRequired,
+    data: React.PropTypes.object.isRequired,
     editor: React.PropTypes.object.isRequired,
     login: React.PropTypes.func.isRequired,
     logout: React.PropTypes.func.isRequired,
     getConferences: React.PropTypes.func.isRequired,
     setupConferenceEditor: React.PropTypes.func.isRequired,
     clearConferenceEditor: React.PropTypes.func.isRequired,
-    saveConference: React.PropTypes.func.isRequired
+    saveConference: React.PropTypes.func.isRequired,
+    saveTrack: React.PropTypes.func.isRequired,
+    saveLocation: React.PropTypes.func.isRequired
   }
 
   render () {
     const {
       UI,
       user,
-      conferences,
+      data,
       editor,
-      login, logout, getConferences, setupConferenceEditor, clearConferenceEditor, saveConference
+      login, logout, getConferences, setupConferenceEditor, clearConferenceEditor, saveConference, saveTrack, saveLocation
     } = this.props;
 
     return (
@@ -65,10 +67,10 @@ export default @connect(state => state, actions) class App extends React.Compone
       : <Dashboard
           input = {{
             user: user.data,
-            conferences: conferences.data,
+            data,
             editor
           }}
-          actions = {{logout, getConferences, setupConferenceEditor, clearConferenceEditor, saveConference}}
+          actions = {{logout, getConferences, setupConferenceEditor, clearConferenceEditor, saveConference, saveTrack, saveLocation}}
         />
       }
       </div>

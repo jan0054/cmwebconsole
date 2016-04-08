@@ -21,18 +21,20 @@ export default {
       data: {}
     },
 
-    conferences: {
-      data: []
+    data: {
+      conferences: [],
+      tracks: [],
+      locations: [],
+      talks: [],
+      venues: []
     },
 
     editor: {
       conferenceId: '',
-      announcement: [],
-      session: [],
-      talk: [],
-      person: [],
-      location: [],
-      venue: []
+      tracks: [],
+      locations: [],
+      talks: [],
+      venues: []
     }
   },
 
@@ -51,6 +53,14 @@ export default {
       _endTime: '',
       _parentEventId: '',
       content: ''
+    },
+
+    TrackEditor: {
+      _trackName: '',
+      _startDate: '',
+      _endDate: '',
+      _locationName: '',
+      capacity: 0
     }
   }
 };

@@ -3,6 +3,7 @@ import classnames from 'classnames';
 
 import Navbar from 'scripts/components/Navbar';
 import ConferenceEditor from 'scripts/components/ConferenceEditor';
+import TrackEditor from 'scripts/components/TrackEditor';
 
 export default class Dashboard extends React.Component {
   static propTypes = {
@@ -21,8 +22,12 @@ export default class Dashboard extends React.Component {
 
   render () {
     const {
-      input: {user, conferences, editor},
-      actions: {logout, setupConferenceEditor, clearConferenceEditor, saveConference}
+      input: {
+        user,
+        data: {conferences, tracks, talks, locations, venues},
+        editor
+      },
+      actions: {logout, setupConferenceEditor, clearConferenceEditor, saveConference, saveTrack, saveLocation}
     } = this.props;
 
     return (
@@ -66,9 +71,7 @@ export default class Dashboard extends React.Component {
                     cursor: 'pointer'
                   }}
                   onClick = {() => {
-                    setupConferenceEditor({
-                      conferenceId: conference.id
-                    });
+                    setupConferenceEditor({conference});
 
                     clearConferenceEditor();
                   }}
@@ -86,14 +89,34 @@ export default class Dashboard extends React.Component {
             }}
           >
           {editor.conferenceId &&
-            <ConferenceEditor
-              input = {{
-                user,
-                conferences,
-                editor
-              }}
-              actions = {{saveConference}}
-            />
+            <div>
+              <h2>Edit Conference</h2>
+              <ConferenceEditor
+                input = {{
+                  user,
+                  data: {conferences},
+                  editor
+                }}
+                actions = {{saveConference}}
+              />
+              <hr />
+              <h2>Edit Conference Tracks</h2>
+            {tracks.map(track =>
+              <TrackEditor
+                key = {track.id}
+                formKey = {track.id}
+                input = {{
+                  data: {
+                    conferences,
+                    track,
+                    location: locations.find(location => location.id === track.get('location').id)
+                  },
+                  editor
+                }}
+                actions = {{saveTrack, saveLocation}}
+              />
+            )}
+            </div>
           }
           </div>
         </main>

@@ -18,7 +18,11 @@ export default class ConferenceEditor extends React.Component {
 
   render () {
     const {
-      input: {user, conferences, editor},
+      input: {
+        user,
+        data: {conferences},
+        editor
+      },
       actions: {saveConference},
       fields: {name, organizer, _startDate, _startTime, _endDate, _endTime, _parentEventId, content}
     } = this.props;
@@ -31,10 +35,9 @@ export default class ConferenceEditor extends React.Component {
           element => element && !name.touched && Array.from(element.querySelectorAll('input, select, textarea')).reverse().forEach(field => field.focus())
         }
       >
-        <h2>Edit Conference</h2>
         <div className = 'row'>
           <div className = 'columns'>
-            <label>Name
+            <label>Conference Name
               <input
                 {...name}
                 type = 'text'
@@ -45,7 +48,7 @@ export default class ConferenceEditor extends React.Component {
         </div>
         <div className = 'row'>
           <div className = 'columns'>
-            <label>Organizer
+            <label>Conference Organizer
               <input
                 {...organizer}
                 type = 'text'
@@ -98,7 +101,7 @@ export default class ConferenceEditor extends React.Component {
               <select
                 {..._parentEventId}
                 value = {
-                  _parentEventId.touched
+                    _parentEventId.touched
                   ? _parentEventId.value
 
                   : conference.get('parentEvent')
@@ -140,7 +143,7 @@ export default class ConferenceEditor extends React.Component {
       }
         <div className = 'row'>
           <div className = 'columns'>
-            <label>Content
+            <label>Conference Content
               <textarea
                 {...content}
                 rows = {8}
@@ -150,31 +153,7 @@ export default class ConferenceEditor extends React.Component {
           </div>
         </div>
         <div className = 'row'>
-          <div className = 'columns small-4 expanded button-group'>
-            <button
-              className = 'button'
-              onClick = {event => {
-                event.preventDefault();
-
-                const parentEvent = conferences.find(conference => conference.id === _parentEventId.value) || null;
-
-                saveConference({
-                  conference,
-
-                  fields: {
-                    name: name.value,
-                    organizer: organizer.value,
-                    start_time: Moment(`${_startDate.value} ${_startTime.value}`, 'YYYY-MM-DD HH:mm').toDate(),
-                    end_time: Moment(`${_endDate.value} ${_endTime.value}`, 'YYYY-MM-DD HH:mm').toDate(),
-                    parentEvent,
-                    content: content.value,
-                    admin: user
-                  }
-                });
-              }}
-            >
-              Save
-            </button>
+          <div className = 'columns small-offset-6 small-6 expanded button-group'>
           {conference.get('published') ||
             <button
               className = 'expanded warning button'
@@ -199,9 +178,33 @@ export default class ConferenceEditor extends React.Component {
                 });
               }}
             >
-              Publish
+              Publish Conference
             </button>
           }
+            <button
+              className = 'button'
+              onClick = {event => {
+                event.preventDefault();
+
+                const parentEvent = conferences.find(conference => conference.id === _parentEventId.value) || null;
+
+                saveConference({
+                  conference,
+
+                  fields: {
+                    name: name.value,
+                    organizer: organizer.value,
+                    start_time: Moment(`${_startDate.value} ${_startTime.value}`, 'YYYY-MM-DD HH:mm').toDate(),
+                    end_time: Moment(`${_endDate.value} ${_endTime.value}`, 'YYYY-MM-DD HH:mm').toDate(),
+                    parentEvent,
+                    content: content.value,
+                    admin: user
+                  }
+                });
+              }}
+            >
+              Save Conference Info
+            </button>
           </div>
         </div>
       </form>
