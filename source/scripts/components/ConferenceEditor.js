@@ -143,7 +143,7 @@ export default class ConferenceEditor extends React.Component {
       }
         <div className = 'row'>
           <div className = 'columns'>
-            <label>Conference Content
+            <label>Conference Summary
               <textarea
                 {...content}
                 rows = {8}
@@ -196,8 +196,8 @@ export default class ConferenceEditor extends React.Component {
                     organizer: organizer.value,
                     start_time: Moment(`${_startDate.value} ${_startTime.value}`, 'YYYY-MM-DD HH:mm').toDate(),
                     end_time: Moment(`${_endDate.value} ${_endTime.value}`, 'YYYY-MM-DD HH:mm').toDate(),
-                    parentEvent,
                     content: content.value,
+                    parentEvent,
                     admin: user
                   }
                 });

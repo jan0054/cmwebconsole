@@ -60,6 +60,14 @@ export default createActions(
       } catch (error) {
         return error;
       }
+    },
+
+    saveTalk: async ({talk, fields}) => {
+      try {
+        return await talk.save(fields);
+      } catch (error) {
+        return error;
+      }
     }
   }
 );

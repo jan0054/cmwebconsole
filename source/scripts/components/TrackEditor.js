@@ -15,7 +15,10 @@ export default class TrackEditor extends React.Component {
     input: React.PropTypes.object.isRequired,
     actions: React.PropTypes.object.isRequired,
     fields: React.PropTypes.object.isRequired,
-    children: React.PropTypes.element.isRequired
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.element.isRequired,
+      React.PropTypes.arrayOf(React.PropTypes.element.isRequired)
+    ])
   }
 
   render () {
@@ -116,10 +119,10 @@ export default class TrackEditor extends React.Component {
 
                     fields: {
                       name: _trackName.value,
-                      start_time: Moment(`${_startDate.value}`, 'YYYY-MM-DD').toDate(),
-                      end_time: Moment(`${_endDate.value}`, 'YYYY-MM-DD').toDate(),
-                      location,
-                      event: conference
+                      start_time: Moment(`${_startDate.value} 00:00`, 'YYYY-MM-DD HH:mm').toDate(),
+                      end_time: Moment(`${_endDate.value} 24:00`, 'YYYY-MM-DD HH:mm').toDate(),
+                      event: conference,
+                      location
                     }
                   });
                 }}

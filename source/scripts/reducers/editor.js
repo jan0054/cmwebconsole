@@ -38,5 +38,21 @@ export default createReducers({
       }
       : location
     )
+  },
+
+  talks: {
+    setupConferenceEditor: (state, action) => action.payload.talks.map(talk => ({
+      id: talk.id,
+      isSaved: false
+    })),
+
+    saveTalk: (state, action) => state.map(talk =>
+        talk.id === action.payload.id
+      ? {
+        ...talk,
+        isSaved: true
+      }
+      : talk
+    )
   }
 }, defaultState.editor);

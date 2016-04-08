@@ -119,7 +119,8 @@ export default class Dashboard extends React.Component {
                 }}
                 actions = {{saveTrack, saveLocation}}
               >
-              {talks.map(talk =>
+              {talks.filter(talk => talk.get('session').id === track.id)
+                    .map(talk =>
                 <TalkEditor
                   key = {talk.id}
                   formKey = {talk.id}
