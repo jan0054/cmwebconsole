@@ -61,6 +61,9 @@ export default {
       _endDate: '',
       _locationName: '',
       capacity: 0
+    },
+
+    TalkEditor: {
     }
   }
 };

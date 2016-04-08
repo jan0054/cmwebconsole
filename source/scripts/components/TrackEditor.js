@@ -14,7 +14,8 @@ export default class TrackEditor extends React.Component {
   static propTypes = {
     input: React.PropTypes.object.isRequired,
     actions: React.PropTypes.object.isRequired,
-    fields: React.PropTypes.object.isRequired
+    fields: React.PropTypes.object.isRequired,
+    children: React.PropTypes.element.isRequired
   }
 
   render () {
@@ -24,7 +25,8 @@ export default class TrackEditor extends React.Component {
         editor
       },
       actions: {saveTrack, saveLocation},
-      fields: {_trackName, _startDate, _endDate, _locationName, capacity}
+      fields: {_trackName, _startDate, _endDate, _locationName, capacity},
+      children
     } = this.props;
 
     const conference = conferences.find(conference => conference.id === editor.conferenceId);
@@ -127,6 +129,11 @@ export default class TrackEditor extends React.Component {
             </div>
           </div>
         </form>
+        <h3>
+          Edit Talks
+          <small> in “{track.get('name')}”</small>
+        </h3>
+        {children}
       </div>
     );
   }

@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import Navbar from 'scripts/components/Navbar';
 import ConferenceEditor from 'scripts/components/ConferenceEditor';
 import TrackEditor from 'scripts/components/TrackEditor';
+import TalkEditor from 'scripts/components/TalkEditor';
 
 export default class Dashboard extends React.Component {
   static propTypes = {
@@ -27,7 +28,7 @@ export default class Dashboard extends React.Component {
         data: {conferences, tracks, talks, locations, venues},
         editor
       },
-      actions: {logout, setupConferenceEditor, clearConferenceEditor, saveConference, saveTrack, saveLocation}
+      actions: {logout, setupConferenceEditor, clearConferenceEditor, saveConference, saveTrack, saveLocation, saveTalk}
     } = this.props;
 
     return (
@@ -101,7 +102,10 @@ export default class Dashboard extends React.Component {
               />
               <hr />
               <h2>Edit Conference Tracks</h2>
-            {tracks.map(track =>
+            {tracks.map(track => {
+              const location = locations.find(location => location.id === track.get('location').id);
+
+              return (
               <TrackEditor
                 key = {track.id}
                 formKey = {track.id}
@@ -109,13 +113,31 @@ export default class Dashboard extends React.Component {
                   data: {
                     conferences,
                     track,
-                    location: locations.find(location => location.id === track.get('location').id)
+                    location
                   },
                   editor
                 }}
                 actions = {{saveTrack, saveLocation}}
-              />
-            )}
+              >
+              {talks.map(talk =>
+                <TalkEditor
+                  key = {talk.id}
+                  formKey = {talk.id}
+                  input = {{
+                    data: {
+                      conferences,
+                      track,
+                      location,
+                      talk
+                    },
+                    editor
+                  }}
+                  actions = {{saveTalk}}
+                />
+              )}
+              </TrackEditor>
+              );
+            })}
             </div>
           }
           </div>
