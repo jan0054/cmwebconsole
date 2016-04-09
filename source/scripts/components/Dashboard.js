@@ -102,7 +102,7 @@ export default class Dashboard extends React.Component {
                 actions = {{saveConference}}
               />
               <hr />
-              <h2>Edit Conference Tracks</h2>
+              <h3>Edit Conference Tracks</h3>
             {tracks.map(track => {
               const location = locations.find(location => location.id === track.get('location').id);
 

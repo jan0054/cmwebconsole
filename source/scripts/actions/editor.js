@@ -10,15 +10,18 @@ export default createActions(
           conferenceId: conference.id,
 
           tracks: await (new Parse.Query('Session')).equalTo('event', conference)
+                                                    .ascending('start_time')
                                                     .find(),
 
           talks: await (new Parse.Query('Talk')).equalTo('event', conference)
+                                                .ascending('start_time')
                                                 .find(),
 
           locations: await (new Parse.Query('Location')).equalTo('event', conference)
                                                         .find(),
 
           venues: await (new Parse.Query('Venue')).equalTo('event', conference)
+                                                  .ascending('createdAt')
                                                   .find()
         };
       } catch (error) {

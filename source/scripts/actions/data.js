@@ -7,6 +7,7 @@ export default createActions(
     getConferences: async ({user}) => {
       try {
         return await (new Parse.Query('Event')).equalTo('admin', user)
+                                               .ascending('start_time')
                                                .find();
       } catch (error) {
         return error;

@@ -42,100 +42,109 @@ export default class TrackEditor extends React.Component {
             element => element && !_trackName.touched && Array.from(element.querySelectorAll('input, select, textarea')).reverse().forEach(field => field.focus())
           }
         >
-          <div className = 'row'>
-            <div className = 'columns'>
-              <label>Track Name
-                <input
-                  {..._trackName}
-                  type = 'text'
-                  value = {_trackName.touched ? _trackName.value : track.get('name')}
-                />
-              </label>
+          <h4 className = 'subheader'>
+            “{_trackName.touched ? _trackName.value : track.get('name')}”
+          </h4>
+          <div
+            style = {{
+              margin: '0 0 0 15px'
+            }}
+          >
+            <div className = 'row'>
+              <div className = 'columns'>
+                <label>Track Name
+                  <input
+                    {..._trackName}
+                    type = 'text'
+                    value = {_trackName.touched ? _trackName.value : track.get('name')}
+                  />
+                </label>
+              </div>
             </div>
-          </div>
-          <div className = 'row'>
-            <div className = 'columns small-3'>
-              <label>Track Start Date
-                <input
-                  {..._startDate}
-                  type = 'date'
-                  value = {_startDate.touched ? _startDate.value : Moment(track.get('start_time')).format('YYYY-MM-DD')}
-                />
-              </label>
+            <div className = 'row'>
+              <div className = 'columns small-3'>
+                <label>Track Start Date
+                  <input
+                    {..._startDate}
+                    type = 'date'
+                    value = {_startDate.touched ? _startDate.value : Moment(track.get('start_time')).format('YYYY-MM-DD')}
+                  />
+                </label>
+              </div>
+              <div className = 'columns small-offset-1 small-3 end'>
+                <label>Track End Date
+                  <input
+                    {..._endDate}
+                    type = 'date'
+                    value = {_endDate.touched ? _endDate.value : Moment(track.get('end_time')).format('YYYY-MM-DD')}
+                  />
+                </label>
+              </div>
             </div>
-            <div className = 'columns small-offset-2 small-3 end'>
-              <label>Track End Date
-                <input
-                  {..._endDate}
-                  type = 'date'
-                  value = {_endDate.touched ? _endDate.value : Moment(track.get('end_time')).format('YYYY-MM-DD')}
-                />
-              </label>
+            <div className = 'row'>
+              <div className = 'columns'>
+                <label>Location Name
+                  <input
+                    {..._locationName}
+                    type = 'text'
+                    value = {_locationName.touched ? _locationName.value : location.get('name')}
+                  />
+                </label>
+              </div>
             </div>
-          </div>
-          <div className = 'row'>
-            <div className = 'columns'>
-              <label>Location Name
-                <input
-                  {..._locationName}
-                  type = 'text'
-                  value = {_locationName.touched ? _locationName.value : location.get('name')}
-                />
-              </label>
+            <div className = 'row'>
+              <div className = 'columns'>
+                <label>Location Capacity
+                  <input
+                    {...capacity}
+                    type = 'number'
+                    value = {capacity.touched ? capacity.value : location.get('capacity')}
+                  />
+                </label>
+              </div>
             </div>
-          </div>
-          <div className = 'row'>
-            <div className = 'columns'>
-              <label>Location Capacity
-                <input
-                  {...capacity}
-                  type = 'number'
-                  value = {capacity.touched ? capacity.value : location.get('capacity')}
-                />
-              </label>
-            </div>
-          </div>
-          <div className = 'row'>
-            <div className = 'columns small-offset-9 small-3'>
-              <button
-                className = {classnames('expanded button', {
-                  success: isSaved
-                })}
-                onClick = {event => {
-                  event.preventDefault();
+            <div className = 'row'>
+              <div className = 'columns small-offset-9 small-3'>
+                <button
+                  className = {classnames('expanded button', {
+                    success: isSaved
+                  })}
+                  onClick = {event => {
+                    event.preventDefault();
 
-                  saveLocation({
-                    location,
+                    saveLocation({
+                      location,
 
-                    fields: {
-                      name: _locationName.value,
-                      capacity: +capacity.value,
-                      event: conference
-                    }
-                  });
+                      fields: {
+                        name: _locationName.value,
+                        capacity: +capacity.value,
+                        event: conference
+                      }
+                    });
 
-                  saveTrack({
-                    track,
+                    saveTrack({
+                      track,
 
-                    fields: {
-                      name: _trackName.value,
-                      start_time: Moment(`${_startDate.value} 00:00`, 'YYYY-MM-DD HH:mm').toDate(),
-                      end_time: Moment(`${_endDate.value} 24:00`, 'YYYY-MM-DD HH:mm').toDate(),
-                      event: conference,
-                      location
-                    }
-                  });
-                }}
-              >
-                {isSaved ? 'Saved' : 'Save Track Info'}
-              </button>
+                      fields: {
+                        name: _trackName.value,
+                        start_time: Moment(`${_startDate.value} 00:00`, 'YYYY-MM-DD HH:mm').toDate(),
+                        end_time: Moment(`${_endDate.value} 24:00`, 'YYYY-MM-DD HH:mm').toDate(),
+                        event: conference,
+                        location
+                      }
+                    });
+                  }}
+                >
+                  {isSaved ? 'Saved' : 'Save Track Info'}
+                </button>
+              </div>
             </div>
           </div>
         </form>
-        <h3>
+        <h4>
           Edit Talks
-          <small> in “{track.get('name')}”</small>
-        </h3>
+          <small> in “{_trackName.touched ? _trackName.value : track.get('name')}”</small>
+        </h4>
         {children}
       </div>
     );
