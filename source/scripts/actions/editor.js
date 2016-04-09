@@ -71,6 +71,28 @@ export default createActions(
       } catch (error) {
         return error;
       }
+    },
+
+    saveVenue: async ({venue, fields}) => {
+      try {
+        return await venue.save(fields);
+      } catch (error) {
+        return error;
+      }
+    },
+
+    savePeople: async ({people, fields}) => {
+      try {
+        return await Parse.Object.saveAll(
+          fields.map(
+            ({id, event, ...attendee}) => people.find(person => person.id === id)
+                                                .set(attendee)
+                                                .addUnique('events', event)
+          )
+        );
+      } catch (error) {
+        return error;
+      }
     }
   }
 );

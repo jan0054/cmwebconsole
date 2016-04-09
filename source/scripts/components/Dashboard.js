@@ -5,6 +5,8 @@ import Navbar from 'scripts/components/Navbar';
 import ConferenceEditor from 'scripts/components/ConferenceEditor';
 import TrackEditor from 'scripts/components/TrackEditor';
 import TalkEditor from 'scripts/components/TalkEditor';
+import VenueEditor from 'scripts/components/VenueEditor';
+import PeopleEditor from 'scripts/components/PeopleEditor';
 
 export default class Dashboard extends React.Component {
   static propTypes = {
@@ -29,7 +31,7 @@ export default class Dashboard extends React.Component {
         data: {people, conferences, tracks, talks, locations, venues},
         editor
       },
-      actions: {logout, setupConferenceEditor, clearConferenceEditor, saveConference, saveTrack, saveLocation, saveTalk}
+      actions: {logout, setupConferenceEditor, clearConferenceEditor, saveConference, saveTrack, saveLocation, saveTalk, saveVenue, savePeople}
     } = this.props;
 
     return (
@@ -142,6 +144,34 @@ export default class Dashboard extends React.Component {
               </TrackEditor>
               );
             })}
+              <hr />
+              <h3>Edit Conference Venues</h3>
+            {venues.map(venue =>
+              <VenueEditor
+                key = {venue.id}
+                formKey = {venue.id}
+                input = {{
+                  data: {
+                    conferences,
+                    venue
+                  },
+                  editor
+                }}
+                actions = {{saveVenue}}
+              />
+            )}
+              <hr />
+              <h3>Edit Conference Attendees</h3>
+              <PeopleEditor
+                input = {{
+                  data: {
+                    people,
+                    conferences
+                  },
+                  editor
+                }}
+                actions = {{savePeople}}
+              />
             </div>
           }
           </div>

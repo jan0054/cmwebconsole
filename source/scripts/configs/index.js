@@ -71,6 +71,23 @@ export default {
       _startTime: '',
       _endTime: '',
       content: ''
+    },
+
+    VenueEditor: {
+      name: '',
+      address: '',
+      phone: '',
+      url: '',
+      content: ''
+    },
+
+    PeopleEditor: {
+      id: '',
+      first_name: '',
+      last_name: '',
+      email: '',
+      title: '',
+      institute: ''
     }
   }
 };

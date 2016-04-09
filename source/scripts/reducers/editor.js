@@ -54,5 +54,21 @@ export default createReducers({
       }
       : talk
     )
+  },
+
+  venues: {
+    setupConferenceEditor: (state, action) => action.payload.venues.map(venue => ({
+      id: venue.id,
+      isSaved: false
+    })),
+
+    saveVenue: (state, action) => state.map(venue =>
+        venue.id === action.payload.id
+      ? {
+        ...venue,
+        isSaved: true
+      }
+      : venue
+    )
   }
 }, defaultState.editor);
