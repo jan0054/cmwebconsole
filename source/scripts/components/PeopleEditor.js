@@ -6,6 +6,7 @@ import {defaultFormValues} from 'scripts/configs';
 @connectForm({
   form: 'PeopleEditor',
   fields: [
+    'email',
     'attendees[].id',
     'attendees[].first_name',
     'attendees[].last_name',
@@ -49,14 +50,59 @@ export default class PeopleEditor extends React.Component {
         data: {people, conferences},
         editor
       },
-      actions: {savePeople},
-      fields: {attendees}
+      actions: {unmountPeopleEditor, mountPeopleEditor, getPeople, addPeople, savePeople, deleteAttendee},
+      fields: {email, attendees}
     } = this.props;
 
     const conference = conferences.find(conference => conference.id === editor.conferenceId);
 
     return (
       <form>
+        <div className = 'input-group'>
+          <input
+            className = 'input-group-field'
+            {...email}
+            type = 'text'
+            placeholder = 'Attendee’s Email'
+          />
+          <div
+            className = 'input-group-button'
+            style = {{
+              width: '25%'
+            }}
+          >
+            <button
+              className = 'secondary button'
+              style = {{
+                width: '100%'
+              }}
+              onClick = {async event => {
+                event.preventDefault();
+
+                const conference = conferences.find(conference => conference.id === editor.conferenceId);
+
+                await addPeople({
+                  people,
+
+                  fields: {
+                    first_name: '',
+                    last_name: '',
+                    email: email.value,
+                    event: conference
+                  }
+                });
+
+                unmountPeopleEditor();
+
+                await getPeople();
+
+                mountPeopleEditor();
+              }}
+            >
+              Add Attendee
+            </button>
+          </div>
+        </div>
         <div
           style = {{
             margin: '0 0 0 15px'
@@ -70,11 +116,12 @@ export default class PeopleEditor extends React.Component {
                 <th width = {150}>Title</th>
                 <th width = {300}>Email</th>
                 <th width = {200}>Institute</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
             {attendees.map(attendee =>
-              <tr key = {attendee.id}>
+              <tr key = {attendee.id.value}>
                 <td>
                   <input
                     {...attendee.first_name}
@@ -111,6 +158,28 @@ export default class PeopleEditor extends React.Component {
                     {...attendee.institute}
                     type = 'text'
                   />
+                </td>
+                <td>
+                  <button
+                    className = 'alert button'
+                    onClick = {async event => {
+                      event.preventDefault();
+
+                      unmountPeopleEditor();
+
+                      await deleteAttendee({
+                        attendee: people.find(person => person.id === attendee.id.value),
+
+                        fields: {
+                          event: conference
+                        }
+                      });
+
+                      mountPeopleEditor();
+                    }}
+                  >
+                    ╳
+                  </button>
                 </td>
               </tr>
             )}

@@ -9,5 +9,17 @@ export default createReducers({
       hasError: action.payload instanceof Parse.Error,
       ...rest
     })
+  },
+
+  Dashboard: {
+    unmountPeopleEditor: ({showPeopleEditor, ...rest}, action) => ({
+      showPeopleEditor: false,
+      ...rest
+    }),
+
+    mountPeopleEditor: ({showPeopleEditor, ...rest}, action) => ({
+      showPeopleEditor: true,
+      ...rest
+    })
   }
 }, defaultState.UI);

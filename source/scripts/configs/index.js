@@ -13,6 +13,10 @@ export default {
     UI: {
       Login: {
         hasError: false
+      },
+
+      Dashboard: {
+        showPeopleEditor: true
       }
     },
 

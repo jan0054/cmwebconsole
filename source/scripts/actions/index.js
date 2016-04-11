@@ -8,7 +8,7 @@
 //
 // This module is an exporter for all other modules in the same directory.
 
-// export * from 'scripts/actions/UI';
+export * from 'scripts/actions/UI';
 export * from 'scripts/actions/user';
 export * from 'scripts/actions/data';
 export * from 'scripts/actions/editor';

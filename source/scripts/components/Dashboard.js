@@ -27,11 +27,12 @@ export default class Dashboard extends React.Component {
   render () {
     const {
       input: {
+        UI,
         user,
         data: {people, conferences, tracks, talks, locations, venues},
         editor
       },
-      actions: {logout, getConferences, setupConferenceEditor, clearConferenceEditor, addConference, saveConference, deleteConference, addTrack, saveTrack, deleteTrack, addLocation, saveLocation, deleteLocation, addTalk, saveTalk, deleteTalk, addVenue, saveVenue, deleteVenue, savePeople}
+      actions: {logout, unmountPeopleEditor, mountPeopleEditor, getPeople, getConferences, setupConferenceEditor, clearConferenceEditor, addConference, saveConference, deleteConference, addTrack, saveTrack, deleteTrack, addLocation, saveLocation, deleteLocation, addTalk, saveTalk, deleteTalk, addVenue, saveVenue, deleteVenue, addPeople, savePeople, deleteAttendee}
     } = this.props;
 
     return (
@@ -236,6 +237,7 @@ export default class Dashboard extends React.Component {
             )}
               <hr />
               <h3>Edit Conference Attendees</h3>
+            {UI.showPeopleEditor &&
               <PeopleEditor
                 input = {{
                   data: {
@@ -244,8 +246,9 @@ export default class Dashboard extends React.Component {
                   },
                   editor
                 }}
-                actions = {{savePeople}}
+                actions = {{unmountPeopleEditor, mountPeopleEditor, getPeople, addPeople, savePeople, deleteAttendee}}
               />
+            }
             </div>
           }
           </div>

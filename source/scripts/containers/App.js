@@ -32,6 +32,8 @@ export default @connect(state => state, actions) class App extends React.Compone
     editor: React.PropTypes.object.isRequired,
     login: React.PropTypes.func.isRequired,
     logout: React.PropTypes.func.isRequired,
+    unmountPeopleEditor: React.PropTypes.func.isRequired,
+    mountPeopleEditor: React.PropTypes.func.isRequired,
     getPeople: React.PropTypes.func.isRequired,
     getConferences: React.PropTypes.func.isRequired,
     setupConferenceEditor: React.PropTypes.func.isRequired,
@@ -51,7 +53,9 @@ export default @connect(state => state, actions) class App extends React.Compone
     addVenue: React.PropTypes.func.isRequired,
     saveVenue: React.PropTypes.func.isRequired,
     deleteVenue: React.PropTypes.func.isRequired,
-    savePeople: React.PropTypes.func.isRequired
+    addPeople: React.PropTypes.func.isRequired,
+    savePeople: React.PropTypes.func.isRequired,
+    deleteAttendee: React.PropTypes.func.isRequired
   }
 
   render () {
@@ -60,7 +64,7 @@ export default @connect(state => state, actions) class App extends React.Compone
       user,
       data,
       editor,
-      login, logout, getPeople, getConferences, setupConferenceEditor, clearConferenceEditor, addConference, saveConference, deleteConference, addTrack, saveTrack, deleteTrack, addLocation, saveLocation, deleteLocation, addTalk, saveTalk, deleteTalk, addVenue, saveVenue, deleteVenue, savePeople
+      login, logout, unmountPeopleEditor, mountPeopleEditor, getPeople, getConferences, setupConferenceEditor, clearConferenceEditor, addConference, saveConference, deleteConference, addTrack, saveTrack, deleteTrack, addLocation, saveLocation, deleteLocation, addTalk, saveTalk, deleteTalk, addVenue, saveVenue, deleteVenue, addPeople, savePeople, deleteAttendee
     } = this.props;
 
     return (
@@ -80,11 +84,12 @@ export default @connect(state => state, actions) class App extends React.Compone
 
       : <Dashboard
           input = {{
+            UI: UI.Dashboard,
             user: user.data,
             data,
             editor
           }}
-          actions = {{logout, getPeople, getConferences, setupConferenceEditor, clearConferenceEditor, addConference, saveConference, deleteConference, addTrack, saveTrack, deleteTrack, addLocation, saveLocation, deleteLocation, addTalk, saveTalk, deleteTalk, addVenue, saveVenue, deleteVenue, savePeople}}
+          actions = {{logout, unmountPeopleEditor, mountPeopleEditor, getPeople, getConferences, setupConferenceEditor, clearConferenceEditor, addConference, saveConference, deleteConference, addTrack, saveTrack, deleteTrack, addLocation, saveLocation, deleteLocation, addTalk, saveTalk, deleteTalk, addVenue, saveVenue, deleteVenue, addPeople, savePeople, deleteAttendee}}
         />
       }
       </div>

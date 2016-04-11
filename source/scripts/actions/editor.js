@@ -161,6 +161,18 @@ export default createActions(
       }
     },
 
+    addPeople: async ({people, fields: {event, ...attendee}}) => {
+      try {
+        return await (
+          people.find(person => person.get('email') === attendee.email) ||
+          new (Parse.Object.extend('Person'))()
+        ).addUnique('events', event)
+         .save(null);
+      } catch (error) {
+        return error;
+      }
+    },
+
     savePeople: async ({people, fields}) => {
       try {
         return await Parse.Object.saveAll(
@@ -170,6 +182,15 @@ export default createActions(
                                                 .addUnique('events', event)
           )
         );
+      } catch (error) {
+        return error;
+      }
+    },
+
+    deleteAttendee: async ({attendee, fields: {event}}) => {
+      try {
+        return await attendee.remove('events', event)
+                             .save(null);
       } catch (error) {
         return error;
       }
