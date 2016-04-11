@@ -24,7 +24,7 @@ export default class TalkEditor extends React.Component {
         data: {people, conferences, track, location, talk},
         editor
       },
-      actions: {saveTalk},
+      actions: {deleteTalk, saveTalk, setupConferenceEditor},
       fields: {name, _authorId, _date, _startTime, _endTime, content}
     } = this.props;
 
@@ -125,9 +125,23 @@ export default class TalkEditor extends React.Component {
               </div>
             </div>
             <div className = 'row'>
-              <div className = 'columns small-offset-9 small-3'>
+              <div className = 'columns small-offset-6 small-6 expanded button-group'>
                 <button
-                  className = {classnames('expanded button', {
+                  className = 'alert button'
+                  onClick = {async event => {
+                    event.preventDefault();
+
+                    const conference = conferences.find(conference => conference.id === editor.conferenceId);
+
+                    await deleteTalk({talk});
+
+                    setupConferenceEditor({conference});
+                  }}
+                >
+                  Delete Talk
+                </button>
+                <button
+                  className = {classnames('button', {
                     success: isSaved
                   })}
                   onClick = {event => {

@@ -10,11 +10,11 @@ export default createActions(
           conferenceId: conference.id,
 
           tracks: await (new Parse.Query('Session')).equalTo('event', conference)
-                                                    .ascending('start_time')
+                                                    .ascending('createdAt')
                                                     .find(),
 
           talks: await (new Parse.Query('Talk')).equalTo('event', conference)
-                                                .ascending('start_time')
+                                                .ascending('createdAt')
                                                 .find(),
 
           locations: await (new Parse.Query('Location')).equalTo('event', conference)
@@ -24,6 +24,14 @@ export default createActions(
                                                   .ascending('createdAt')
                                                   .find()
         };
+      } catch (error) {
+        return error;
+      }
+    },
+
+    addConference: async ({fields}) => {
+      try {
+        return await new (Parse.Object.extend('Event'))().save(fields);
       } catch (error) {
         return error;
       }
@@ -49,9 +57,41 @@ export default createActions(
       }
     },
 
+    deleteConference: async ({conference}) => {
+      try {
+        return await conference.destroy();
+      } catch (error) {
+        return error;
+      }
+    },
+
+    addTrack: async ({fields}) => {
+      try {
+        return await new (Parse.Object.extend('Session'))().save(fields);
+      } catch (error) {
+        return error;
+      }
+    },
+
     saveTrack: async ({track, fields}) => {
       try {
         return await track.save(fields);
+      } catch (error) {
+        return error;
+      }
+    },
+
+    deleteTrack: async ({track}) => {
+      try {
+        return await track.destroy();
+      } catch (error) {
+        return error;
+      }
+    },
+
+    addLocation: async ({fields}) => {
+      try {
+        return await new (Parse.Object.extend('Location'))().save(fields);
       } catch (error) {
         return error;
       }
@@ -65,6 +105,22 @@ export default createActions(
       }
     },
 
+    deleteLocation: async ({location}) => {
+      try {
+        return await location.destroy();
+      } catch (error) {
+        return error;
+      }
+    },
+
+    addTalk: async ({fields}) => {
+      try {
+        return await new (Parse.Object.extend('Talk'))().save(fields);
+      } catch (error) {
+        return error;
+      }
+    },
+
     saveTalk: async ({talk, fields}) => {
       try {
         return await talk.save(fields);
@@ -73,9 +129,33 @@ export default createActions(
       }
     },
 
+    deleteTalk: async ({talk}) => {
+      try {
+        return await talk.destroy();
+      } catch (error) {
+        return error;
+      }
+    },
+
+    addVenue: async ({fields}) => {
+      try {
+        return await new (Parse.Object.extend('Venue'))().save(fields);
+      } catch (error) {
+        return error;
+      }
+    },
+
     saveVenue: async ({venue, fields}) => {
       try {
         return await venue.save(fields);
+      } catch (error) {
+        return error;
+      }
+    },
+
+    deleteVenue: async ({venue}) => {
+      try {
+        return await venue.destroy();
       } catch (error) {
         return error;
       }

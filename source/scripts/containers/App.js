@@ -36,11 +36,21 @@ export default @connect(state => state, actions) class App extends React.Compone
     getConferences: React.PropTypes.func.isRequired,
     setupConferenceEditor: React.PropTypes.func.isRequired,
     clearConferenceEditor: React.PropTypes.func.isRequired,
+    addConference: React.PropTypes.func.isRequired,
     saveConference: React.PropTypes.func.isRequired,
+    deleteConference: React.PropTypes.func.isRequired,
+    addTrack: React.PropTypes.func.isRequired,
     saveTrack: React.PropTypes.func.isRequired,
+    deleteTrack: React.PropTypes.func.isRequired,
+    addLocation: React.PropTypes.func.isRequired,
     saveLocation: React.PropTypes.func.isRequired,
+    deleteLocation: React.PropTypes.func.isRequired,
+    addTalk: React.PropTypes.func.isRequired,
     saveTalk: React.PropTypes.func.isRequired,
+    deleteTalk: React.PropTypes.func.isRequired,
+    addVenue: React.PropTypes.func.isRequired,
     saveVenue: React.PropTypes.func.isRequired,
+    deleteVenue: React.PropTypes.func.isRequired,
     savePeople: React.PropTypes.func.isRequired
   }
 
@@ -50,7 +60,7 @@ export default @connect(state => state, actions) class App extends React.Compone
       user,
       data,
       editor,
-      login, logout, getPeople, getConferences, setupConferenceEditor, clearConferenceEditor, saveConference, saveTrack, saveLocation, saveTalk, saveVenue, savePeople
+      login, logout, getPeople, getConferences, setupConferenceEditor, clearConferenceEditor, addConference, saveConference, deleteConference, addTrack, saveTrack, deleteTrack, addLocation, saveLocation, deleteLocation, addTalk, saveTalk, deleteTalk, addVenue, saveVenue, deleteVenue, savePeople
     } = this.props;
 
     return (
@@ -74,7 +84,7 @@ export default @connect(state => state, actions) class App extends React.Compone
             data,
             editor
           }}
-          actions = {{logout, getPeople, getConferences, setupConferenceEditor, clearConferenceEditor, saveConference, saveTrack, saveLocation, saveTalk, saveVenue, savePeople}}
+          actions = {{logout, getPeople, getConferences, setupConferenceEditor, clearConferenceEditor, addConference, saveConference, deleteConference, addTrack, saveTrack, deleteTrack, addLocation, saveLocation, deleteLocation, addTalk, saveTalk, deleteTalk, addVenue, saveVenue, deleteVenue, savePeople}}
         />
       }
       </div>

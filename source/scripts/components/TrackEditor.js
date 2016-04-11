@@ -24,10 +24,11 @@ export default class TrackEditor extends React.Component {
   render () {
     const {
       input: {
-        data: {conferences, track, location},
+        user,
+        data: {conferences, track, location, talks},
         editor
       },
-      actions: {saveTrack, saveLocation},
+      actions: {saveTrack, deleteTrack, saveLocation, deleteLocation, addTalk, deleteTalk, setupConferenceEditor},
       fields: {_trackName, _startDate, _endDate, _locationName, capacity},
       children
     } = this.props;
@@ -104,9 +105,27 @@ export default class TrackEditor extends React.Component {
               </div>
             </div>
             <div className = 'row'>
-              <div className = 'columns small-offset-9 small-3'>
+              <div className = 'columns small-offset-6 small-6 expanded button-group'>
                 <button
-                  className = {classnames('expanded button', {
+                  className = 'alert button'
+                  onClick = {async event => {
+                    event.preventDefault();
+
+                    const conference = conferences.find(conference => conference.id === editor.conferenceId);
+
+                    talks.forEach(async talk => await deleteTalk({talk}));
+
+                    await deleteLocation({location});
+
+                    await deleteTrack({track});
+
+                    setupConferenceEditor({conference});
+                  }}
+                >
+                  Delete Track & Talks
+                </button>
+                <button
+                  className = {classnames('button', {
                     success: isSaved
                   })}
                   onClick = {event => {
@@ -128,7 +147,7 @@ export default class TrackEditor extends React.Component {
                       fields: {
                         name: _trackName.value,
                         start_time: Moment(`${_startDate.value} 00:00`, 'YYYY-MM-DD HH:mm').toDate(),
-                        end_time: Moment(`${_endDate.value} 24:00`, 'YYYY-MM-DD HH:mm').toDate(),
+                        end_time: Moment(`${_endDate.value} 23:59`, 'YYYY-MM-DD HH:mm').toDate(),
                         event: conference,
                         location
                       }
@@ -145,6 +164,31 @@ export default class TrackEditor extends React.Component {
           Edit Talks
           <small> in “{_trackName.touched ? _trackName.value : track.get('name')}”</small>
         </h4>
+        <div className = 'row'>
+          <div className = 'columns small-3 end'>
+            <button
+              className = 'expanded secondary button'
+              onClick = {async event => {
+                event.preventDefault();
+
+                await addTalk({
+                  fields: {
+                    content: '',
+                    author: await user.get('person').fetch(),
+                    event: conference,
+                    session: track,
+                    location,
+                    type: 0
+                  }
+                });
+
+                setupConferenceEditor({conference});
+              }}
+            >
+              Add Talk
+            </button>
+          </div>
+        </div>
         {children}
       </div>
     );

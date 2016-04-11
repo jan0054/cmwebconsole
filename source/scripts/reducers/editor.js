@@ -5,7 +5,9 @@ export default createReducers({
   conferenceId: {
     setupConferenceEditor: (state, action) => action.payload.conferenceId,
 
-    saveConference: (state, action) => ''
+    saveConference: (state, action) => '',
+
+    deleteConference: (state, action) => ''
   },
 
   tracks: {

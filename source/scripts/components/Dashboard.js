@@ -31,7 +31,7 @@ export default class Dashboard extends React.Component {
         data: {people, conferences, tracks, talks, locations, venues},
         editor
       },
-      actions: {logout, setupConferenceEditor, clearConferenceEditor, saveConference, saveTrack, saveLocation, saveTalk, saveVenue, savePeople}
+      actions: {logout, getConferences, setupConferenceEditor, clearConferenceEditor, addConference, saveConference, deleteConference, addTrack, saveTrack, deleteTrack, addLocation, saveLocation, deleteLocation, addTalk, saveTalk, deleteTalk, addVenue, saveVenue, deleteVenue, savePeople}
     } = this.props;
 
     return (
@@ -58,7 +58,7 @@ export default class Dashboard extends React.Component {
                   }}
                 >
                   <strong>
-                    Your Conferences
+                    My Conferences
                   </strong>
                 </a>
               </li>
@@ -84,6 +84,29 @@ export default class Dashboard extends React.Component {
                 </a>
               </li>
             )}
+              <li
+                style = {{
+                  margin: '40px 16px 0 16px'
+                }}
+              >
+                <button
+                  className = 'expanded secondary button'
+                  onClick = {async event => {
+                    event.preventDefault();
+
+                    await addConference({
+                      fields: {
+                        name: '(New Conference)',
+                        admin: user
+                      }
+                    });
+
+                    getConferences({user});
+                  }}
+                >
+                  Add Conference
+                </button>
+              </li>
             </ul>
           </div>
           <div
@@ -98,32 +121,61 @@ export default class Dashboard extends React.Component {
               <ConferenceEditor
                 input = {{
                   user,
-                  data: {conferences},
+                  data: {conferences, tracks, talks, locations, venues},
                   editor
                 }}
-                actions = {{saveConference}}
+                actions = {{getConferences, saveConference, deleteConference, deleteTrack, deleteLocation, deleteTalk, deleteVenue}}
               />
               <hr />
               <h3>Edit Conference Tracks</h3>
+              <div className = 'row'>
+                <div className = 'columns small-3 end'>
+                  <button
+                    className = 'expanded secondary button'
+                    onClick = {async event => {
+                      event.preventDefault();
+
+                      const conference = conferences.find(conference => conference.id === editor.conferenceId);
+
+                      await addTrack({
+                        fields: {
+                          event: conference,
+                          location: (await addLocation({
+                            fields: {
+                              event: conference
+                            }
+                          })).payload
+                        }
+                      });
+
+                      setupConferenceEditor({conference});
+                    }}
+                  >
+                    Add Track
+                  </button>
+                </div>
+              </div>
             {tracks.map(track => {
               const location = locations.find(location => location.id === track.get('location').id);
+              const talksInTrack = talks.filter(talk => talk.get('session').id === track.id);
 
               return (
               <TrackEditor
                 key = {track.id}
                 formKey = {track.id}
                 input = {{
+                  user,
                   data: {
                     conferences,
                     track,
-                    location
+                    location,
+                    talks: talksInTrack
                   },
                   editor
                 }}
-                actions = {{saveTrack, saveLocation}}
+                actions = {{saveTrack, deleteTrack, saveLocation, deleteLocation, addTalk, deleteTalk, setupConferenceEditor}}
               >
-              {talks.filter(talk => talk.get('session').id === track.id)
-                    .map(talk =>
+              {talksInTrack.map(talk =>
                 <TalkEditor
                   key = {talk.id}
                   formKey = {talk.id}
@@ -138,7 +190,7 @@ export default class Dashboard extends React.Component {
                     },
                     editor
                   }}
-                  actions = {{saveTalk}}
+                  actions = {{saveTalk, deleteTalk, setupConferenceEditor}}
                 />
               )}
               </TrackEditor>
@@ -146,6 +198,28 @@ export default class Dashboard extends React.Component {
             })}
               <hr />
               <h3>Edit Conference Venues</h3>
+              <div className = 'row'>
+                <div className = 'columns small-3 end'>
+                  <button
+                    className = 'expanded secondary button'
+                    onClick = {async event => {
+                      event.preventDefault();
+
+                      const conference = conferences.find(conference => conference.id === editor.conferenceId);
+
+                      await addVenue({
+                        fields: {
+                          event: conference
+                        }
+                      });
+
+                      setupConferenceEditor({conference});
+                    }}
+                  >
+                    Add Venue
+                  </button>
+                </div>
+              </div>
             {venues.map(venue =>
               <VenueEditor
                 key = {venue.id}
@@ -157,7 +231,7 @@ export default class Dashboard extends React.Component {
                   },
                   editor
                 }}
-                actions = {{saveVenue}}
+                actions = {{saveVenue, deleteVenue, setupConferenceEditor}}
               />
             )}
               <hr />

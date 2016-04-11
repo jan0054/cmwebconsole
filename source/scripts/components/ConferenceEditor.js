@@ -20,10 +20,10 @@ export default class ConferenceEditor extends React.Component {
     const {
       input: {
         user,
-        data: {conferences},
+        data: {conferences, tracks, talks, locations, venues},
         editor
       },
-      actions: {saveConference},
+      actions: {getConferences, saveConference, deleteConference, deleteTrack, deleteLocation, deleteTalk, deleteVenue},
       fields: {name, organizer, _startDate, _startTime, _endDate, _endTime, _parentEventId, content}
     } = this.props;
 
@@ -161,10 +161,30 @@ export default class ConferenceEditor extends React.Component {
             </div>
           </div>
           <div className = 'row'>
-            <div className = 'columns small-offset-6 small-6 expanded button-group'>
+            <div className = 'columns small-offset-3 small-9 expanded button-group'>
+              <button
+                className = 'alert button'
+                onClick = {async event => {
+                  event.preventDefault();
+
+                  talks.forEach(async talk => await deleteTalk({talk}));
+
+                  locations.forEach(async location => await deleteLocation({location}));
+
+                  tracks.forEach(async track => await deleteTrack({track}));
+
+                  venues.forEach(async venue => await deleteVenue({venue}));
+
+                  await deleteConference({conference});
+
+                  getConferences({user});
+                }}
+              >
+                Delete Conference
+              </button>
             {conference.get('published') ||
               <button
-                className = 'expanded warning button'
+                className = 'warning button'
                 onClick = {event => {
                   event.preventDefault();
 
