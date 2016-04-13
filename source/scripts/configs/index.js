@@ -35,11 +35,17 @@ export default {
     },
 
     editor: {
-      conferenceId: '',
+      conference: {
+        id: '',
+        isSaved: false
+      },
       tracks: [],
       locations: [],
       talks: [],
-      venues: []
+      venues: [],
+      people: {
+        isSaved: false
+      }
     }
   },
 

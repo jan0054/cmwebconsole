@@ -7,7 +7,7 @@ export default createActions(
     setupConferenceEditor: async ({conference}) => {
       try {
         return {
-          conferenceId: conference.id,
+          conference,
 
           tracks: await (new Parse.Query('Session')).equalTo('event', conference)
                                                     .ascending('createdAt')
@@ -37,7 +37,7 @@ export default createActions(
       }
     },
 
-    saveConference: async ({conference, fields}) => {
+    saveConference: async ({conference, fields: {parentEvent, ...fields}}) => {
       try {
         if (conference.get('parentEvent')) {
           await conference.get('parentEvent').save({
@@ -45,13 +45,16 @@ export default createActions(
           });
         }
 
-        if (fields.parentEvent) {
-          await fields.parentEvent.save({
-            childrenEvent: (fields.parentEvent.get('childrenEvent') || []).concat(conference)
+        if (parentEvent) {
+          await parentEvent.save({
+            childrenEvent: (parentEvent.get('childrenEvent') || []).concat(conference)
           });
-        }
 
-        return await conference.save(fields);
+          return await conference.save({parentEvent, ...fields});
+        } else {
+          return await conference.unset('parentEvent')
+                                 .save(fields);
+        }
       } catch (error) {
         return error;
       }
@@ -161,19 +164,21 @@ export default createActions(
       }
     },
 
-    addPeople: async ({people, fields: {event, ...attendee}}) => {
+    addAttendee: async ({people, fields: {event, ...attendee}}) => {
       try {
-        return await (
-          people.find(person => person.get('email') === attendee.email) ||
-          new (Parse.Object.extend('Person'))()
-        ).addUnique('events', event)
-         .save(null);
+        return await event.addUnique('attendees',
+          await (
+            people.find(person => person.get('email') === attendee.email) ||
+            new (Parse.Object.extend('Person'))().set(attendee)
+          ).addUnique('events', event)
+           .save(null)
+        ).save(null);
       } catch (error) {
         return error;
       }
     },
 
-    savePeople: async ({people, fields}) => {
+    saveAttendee: async ({people, fields}) => {
       try {
         return await Parse.Object.saveAll(
           fields.map(
@@ -189,6 +194,9 @@ export default createActions(
 
     deleteAttendee: async ({attendee, fields: {event}}) => {
       try {
+        await event.remove('attendees', attendee)
+                   .save(null);
+
         return await attendee.remove('events', event)
                              .save(null);
       } catch (error) {

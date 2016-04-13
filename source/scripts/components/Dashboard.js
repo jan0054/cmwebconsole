@@ -32,7 +32,7 @@ export default class Dashboard extends React.Component {
         data: {people, conferences, tracks, talks, locations, venues},
         editor
       },
-      actions: {logout, unmountPeopleEditor, mountPeopleEditor, getPeople, getConferences, setupConferenceEditor, clearConferenceEditor, addConference, saveConference, deleteConference, addTrack, saveTrack, deleteTrack, addLocation, saveLocation, deleteLocation, addTalk, saveTalk, deleteTalk, addVenue, saveVenue, deleteVenue, addPeople, savePeople, deleteAttendee}
+      actions: {logout, unmountPeopleEditor, mountPeopleEditor, clearIsSaved, getPeople, getConferences, setupConferenceEditor, clearConferenceEditor, addConference, saveConference, deleteConference, addTrack, saveTrack, deleteTrack, addLocation, saveLocation, deleteLocation, addTalk, saveTalk, deleteTalk, addVenue, saveVenue, deleteVenue, addAttendee, saveAttendee, deleteAttendee}
     } = this.props;
 
     return (
@@ -67,7 +67,7 @@ export default class Dashboard extends React.Component {
               <li
                 key = {conference.id}
                 className = {classnames({
-                  active: conference.id === editor.conferenceId
+                  active: conference.id === editor.conference.id
                 })}
               >
                 <a
@@ -98,6 +98,7 @@ export default class Dashboard extends React.Component {
                     await addConference({
                       fields: {
                         name: '(New Conference)',
+                        attendees: [],
                         admin: user
                       }
                     });
@@ -116,7 +117,7 @@ export default class Dashboard extends React.Component {
               background: '#fff'
             }}
           >
-          {editor.conferenceId &&
+          {editor.conference.id &&
             <div>
               <h2>Edit Conference</h2>
               <ConferenceEditor
@@ -125,7 +126,7 @@ export default class Dashboard extends React.Component {
                   data: {conferences, tracks, talks, locations, venues},
                   editor
                 }}
-                actions = {{getConferences, saveConference, deleteConference, deleteTrack, deleteLocation, deleteTalk, deleteVenue}}
+                actions = {{clearIsSaved, getConferences, saveConference, deleteConference, deleteTrack, deleteLocation, deleteTalk, deleteVenue}}
               />
               <hr />
               <h3>Edit Conference Tracks</h3>
@@ -136,7 +137,7 @@ export default class Dashboard extends React.Component {
                     onClick = {async event => {
                       event.preventDefault();
 
-                      const conference = conferences.find(conference => conference.id === editor.conferenceId);
+                      const conference = conferences.find(conference => conference.id === editor.conference.id);
 
                       await addTrack({
                         fields: {
@@ -174,7 +175,7 @@ export default class Dashboard extends React.Component {
                   },
                   editor
                 }}
-                actions = {{saveTrack, deleteTrack, saveLocation, deleteLocation, addTalk, deleteTalk, setupConferenceEditor}}
+                actions = {{clearIsSaved, saveTrack, deleteTrack, saveLocation, deleteLocation, addTalk, deleteTalk, setupConferenceEditor}}
               >
               {talksInTrack.map(talk =>
                 <TalkEditor
@@ -191,7 +192,7 @@ export default class Dashboard extends React.Component {
                     },
                     editor
                   }}
-                  actions = {{saveTalk, deleteTalk, setupConferenceEditor}}
+                  actions = {{clearIsSaved, saveTalk, deleteTalk, setupConferenceEditor}}
                 />
               )}
               </TrackEditor>
@@ -206,7 +207,7 @@ export default class Dashboard extends React.Component {
                     onClick = {async event => {
                       event.preventDefault();
 
-                      const conference = conferences.find(conference => conference.id === editor.conferenceId);
+                      const conference = conferences.find(conference => conference.id === editor.conference.id);
 
                       await addVenue({
                         fields: {
@@ -232,7 +233,7 @@ export default class Dashboard extends React.Component {
                   },
                   editor
                 }}
-                actions = {{saveVenue, deleteVenue, setupConferenceEditor}}
+                actions = {{clearIsSaved, saveVenue, deleteVenue, setupConferenceEditor}}
               />
             )}
               <hr />
@@ -246,7 +247,7 @@ export default class Dashboard extends React.Component {
                   },
                   editor
                 }}
-                actions = {{unmountPeopleEditor, mountPeopleEditor, getPeople, addPeople, savePeople, deleteAttendee}}
+                actions = {{unmountPeopleEditor, mountPeopleEditor, clearIsSaved, getPeople, addAttendee, saveAttendee, deleteAttendee}}
               />
             }
             </div>

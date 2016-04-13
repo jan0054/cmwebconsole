@@ -22,11 +22,11 @@ export default class VenueEditor extends React.Component {
         data: {conferences, venue},
         editor
       },
-      actions: {saveVenue, deleteVenue, setupConferenceEditor},
+      actions: {clearIsSaved, saveVenue, deleteVenue, setupConferenceEditor},
       fields: {name, address, phone, url, content}
     } = this.props;
 
-    const conference = conferences.find(conference => conference.id === editor.conferenceId);
+    const conference = conferences.find(conference => conference.id === editor.conference.id);
     const {isSaved} = editor.venues.find(_venue => _venue.id === venue.id);
 
     return (
@@ -106,7 +106,7 @@ export default class VenueEditor extends React.Component {
                   onClick = {async event => {
                     event.preventDefault();
 
-                    const conference = conferences.find(conference => conference.id === editor.conferenceId);
+                    const conference = conferences.find(conference => conference.id === editor.conference.id);
 
                     await deleteVenue({venue});
 
@@ -134,6 +134,8 @@ export default class VenueEditor extends React.Component {
                         event: conference
                       }
                     });
+
+                    setTimeout(() => clearIsSaved({editor}), 3000);
                   }}
                 >
                   {isSaved ? 'Saved' : 'Save Venue Info'}

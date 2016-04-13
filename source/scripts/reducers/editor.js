@@ -2,12 +2,26 @@ import {defaultState} from 'scripts/configs';
 import {createReducers} from 'scripts/helpers';
 
 export default createReducers({
-  conferenceId: {
-    setupConferenceEditor: (state, action) => action.payload.conferenceId,
+  conference: {
+    setupConferenceEditor: (state, action) => ({
+      id: action.payload.conference.id,
+      isSaved: false
+    }),
 
-    saveConference: (state, action) => '',
+    saveConference: (state, action) => ({
+      ...state,
+      isSaved: true
+    }),
 
-    deleteConference: (state, action) => ''
+    deleteConference: (state, action) => ({
+      id: '',
+      isSaved: false
+    }),
+
+    clearIsSaved: (state, action) => ({
+      ...state,
+      isSaved: false
+    })
   },
 
   tracks: {
@@ -23,7 +37,12 @@ export default createReducers({
         isSaved: true
       }
       : track
-    )
+    ),
+
+    clearIsSaved: (state, action) => action.payload.editor.tracks.map(track => ({
+      id: track.id,
+      isSaved: false
+    }))
   },
 
   locations: {
@@ -39,7 +58,12 @@ export default createReducers({
         isSaved: true
       }
       : location
-    )
+    ),
+
+    clearIsSaved: (state, action) => action.payload.editor.locations.map(location => ({
+      id: location.id,
+      isSaved: false
+    }))
   },
 
   talks: {
@@ -55,7 +79,12 @@ export default createReducers({
         isSaved: true
       }
       : talk
-    )
+    ),
+
+    clearIsSaved: (state, action) => action.payload.editor.talks.map(talk => ({
+      id: talk.id,
+      isSaved: false
+    }))
   },
 
   venues: {
@@ -71,6 +100,25 @@ export default createReducers({
         isSaved: true
       }
       : venue
-    )
+    ),
+
+    clearIsSaved: (state, action) => action.payload.editor.venues.map(venue => ({
+      id: venue.id,
+      isSaved: false
+    }))
+  },
+
+  people: {
+    setupConferenceEditor: (state, action) => ({
+      isSaved: false
+    }),
+
+    saveAttendee: (state, action) => ({
+      isSaved: true
+    }),
+
+    clearIsSaved: (state, action) => ({
+      isSaved: false
+    })
   }
 }, defaultState.editor);

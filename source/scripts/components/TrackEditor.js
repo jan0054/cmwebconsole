@@ -28,12 +28,12 @@ export default class TrackEditor extends React.Component {
         data: {conferences, track, location, talks},
         editor
       },
-      actions: {saveTrack, deleteTrack, saveLocation, deleteLocation, addTalk, deleteTalk, setupConferenceEditor},
+      actions: {clearIsSaved, saveTrack, deleteTrack, saveLocation, deleteLocation, addTalk, deleteTalk, setupConferenceEditor},
       fields: {_trackName, _startDate, _endDate, _locationName, capacity},
       children
     } = this.props;
 
-    const conference = conferences.find(conference => conference.id === editor.conferenceId);
+    const conference = conferences.find(conference => conference.id === editor.conference.id);
     const isSaved = editor.tracks.find(_track => _track.id === track.id).isSaved && editor.locations.find(_location => _location.id === location.id).isSaved;
 
     return (
@@ -111,7 +111,7 @@ export default class TrackEditor extends React.Component {
                   onClick = {async event => {
                     event.preventDefault();
 
-                    const conference = conferences.find(conference => conference.id === editor.conferenceId);
+                    const conference = conferences.find(conference => conference.id === editor.conference.id);
 
                     talks.forEach(async talk => await deleteTalk({talk}));
 
@@ -152,6 +152,8 @@ export default class TrackEditor extends React.Component {
                         location
                       }
                     });
+
+                    setTimeout(() => clearIsSaved({editor}), 3000);
                   }}
                 >
                   {isSaved ? 'Saved' : 'Save Track Info'}

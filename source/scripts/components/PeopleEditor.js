@@ -1,4 +1,5 @@
 import React from 'react';
+import classnames from 'classnames';
 import {reduxForm as connectForm} from 'redux-form';
 
 import {defaultFormValues} from 'scripts/configs';
@@ -33,7 +34,7 @@ export default class PeopleEditor extends React.Component {
 
     people.filter(person => person.get('events') && person.get('events')
                                                           .map(event => event.id)
-                                                          .includes(editor.conferenceId))
+                                                          .includes(editor.conference.id))
           .forEach(attendee => attendees.addField({
             id: attendee.id || defaultFormValues.PeopleEditor.id,
             first_name: attendee.get('first_name') || defaultFormValues.PeopleEditor.first_name,
@@ -50,11 +51,12 @@ export default class PeopleEditor extends React.Component {
         data: {people, conferences},
         editor
       },
-      actions: {unmountPeopleEditor, mountPeopleEditor, getPeople, addPeople, savePeople, deleteAttendee},
+      actions: {clearIsSaved, unmountPeopleEditor, mountPeopleEditor, getPeople, addAttendee, saveAttendee, deleteAttendee},
       fields: {email, attendees}
     } = this.props;
 
-    const conference = conferences.find(conference => conference.id === editor.conferenceId);
+    const conference = conferences.find(conference => conference.id === editor.conference.id);
+    const {isSaved} = editor.people;
 
     return (
       <form>
@@ -79,9 +81,9 @@ export default class PeopleEditor extends React.Component {
               onClick = {async event => {
                 event.preventDefault();
 
-                const conference = conferences.find(conference => conference.id === editor.conferenceId);
+                const conference = conferences.find(conference => conference.id === editor.conference.id);
 
-                await addPeople({
+                await addAttendee({
                   people,
 
                   fields: {
@@ -188,11 +190,13 @@ export default class PeopleEditor extends React.Component {
           <div className = 'row'>
             <div className = 'columns small-offset-9 small-3'>
               <button
-                className = 'expanded button'
+                className = {classnames('expanded button', {
+                  success: isSaved
+                })}
                 onClick = {event => {
                   event.preventDefault();
 
-                  savePeople({
+                  saveAttendee({
                     people,
 
                     fields: attendees.map(attendee => ({
@@ -205,9 +209,11 @@ export default class PeopleEditor extends React.Component {
                       event: conference
                     }))
                   });
+
+                  setTimeout(() => clearIsSaved({editor}), 3000);
                 }}
               >
-                Save Attendees Info
+                {isSaved ? 'Saved' : 'Save Attendees Info'}
               </button>
             </div>
           </div>

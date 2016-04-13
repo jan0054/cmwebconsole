@@ -24,11 +24,11 @@ export default class TalkEditor extends React.Component {
         data: {people, conferences, track, location, talk},
         editor
       },
-      actions: {deleteTalk, saveTalk, setupConferenceEditor},
+      actions: {clearIsSaved, deleteTalk, saveTalk, setupConferenceEditor},
       fields: {name, _authorId, _date, _startTime, _endTime, content}
     } = this.props;
 
-    const conference = conferences.find(conference => conference.id === editor.conferenceId);
+    const conference = conferences.find(conference => conference.id === editor.conference.id);
     const {isSaved} = editor.talks.find(_talk => _talk.id === talk.id);
 
     return (
@@ -131,7 +131,7 @@ export default class TalkEditor extends React.Component {
                   onClick = {async event => {
                     event.preventDefault();
 
-                    const conference = conferences.find(conference => conference.id === editor.conferenceId);
+                    const conference = conferences.find(conference => conference.id === editor.conference.id);
 
                     await deleteTalk({talk});
 
@@ -164,6 +164,8 @@ export default class TalkEditor extends React.Component {
                         type: 0
                       }
                     });
+
+                    setTimeout(() => clearIsSaved({editor}), 3000);
                   }}
                 >
                   {isSaved ? 'Saved' : 'Save Talk Info'}

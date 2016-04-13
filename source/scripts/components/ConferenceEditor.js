@@ -1,4 +1,5 @@
 import React from 'react';
+import classnames from 'classnames';
 import {reduxForm as connectForm} from 'redux-form';
 import Moment from 'moment';
 
@@ -23,11 +24,12 @@ export default class ConferenceEditor extends React.Component {
         data: {conferences, tracks, talks, locations, venues},
         editor
       },
-      actions: {getConferences, saveConference, deleteConference, deleteTrack, deleteLocation, deleteTalk, deleteVenue},
+      actions: {clearIsSaved, getConferences, saveConference, deleteConference, deleteTrack, deleteLocation, deleteTalk, deleteVenue},
       fields: {name, organizer, _startDate, _startTime, _endDate, _endTime, _parentEventId, content}
     } = this.props;
 
-    const conference = conferences.find(conference => conference.id === editor.conferenceId);
+    const conference = conferences.find(conference => conference.id === editor.conference.id);
+    const {isSaved} = editor.conference;
 
     return (
       <form
@@ -75,7 +77,7 @@ export default class ConferenceEditor extends React.Component {
                 />
               </label>
             </div>
-            <div className = 'columns small-2'>
+            <div className = 'columns small-3'>
               <label>Start Time
                 <input
                   {..._startTime}
@@ -84,7 +86,7 @@ export default class ConferenceEditor extends React.Component {
                 />
               </label>
             </div>
-            <div className = 'columns small-offset-1 small-3'>
+            <div className = 'columns small-3'>
               <label>End Date
                 <input
                   {..._endDate}
@@ -93,7 +95,7 @@ export default class ConferenceEditor extends React.Component {
                 />
               </label>
             </div>
-            <div className = 'columns small-2 end'>
+            <div className = 'columns small-3'>
               <label>End Time
                 <input
                   {..._endTime}
@@ -119,7 +121,7 @@ export default class ConferenceEditor extends React.Component {
                   }
                 >
                   <option></option>
-                {conferences.filter(conference => conference.id !== editor.conferenceId)
+                {conferences.filter(conference => conference.id !== editor.conference.id)
                             .map(conference =>
                   <option
                     key = {conference.id}
@@ -182,7 +184,6 @@ export default class ConferenceEditor extends React.Component {
               >
                 Delete Conference
               </button>
-            {conference.get('published') ||
               <button
                 className = 'warning button'
                 onClick = {event => {
@@ -200,21 +201,22 @@ export default class ConferenceEditor extends React.Component {
                       end_time: Moment(`${_endDate.value} ${_endTime.value}`, 'YYYY-MM-DD HH:mm').toDate(),
                       parentEvent,
                       content: content.value,
-                      published: 1,
+                      published: +!conference.get('published'),
                       admin: user
                     }
                   });
                 }}
               >
-                Publish Conference
+                {conference.get('published') ? 'Unpublish' : 'Publish' } Conference
               </button>
-            }
               <button
-                className = 'button'
+                className = {classnames('button', {
+                  success: isSaved
+                })}
                 onClick = {event => {
                   event.preventDefault();
 
-                  const parentEvent = conferences.find(conference => conference.id === _parentEventId.value) || null;
+                  const parentEvent = conferences.find(conference => conference.id === _parentEventId.value);
 
                   saveConference({
                     conference,
@@ -229,9 +231,11 @@ export default class ConferenceEditor extends React.Component {
                       admin: user
                     }
                   });
+
+                  setTimeout(() => clearIsSaved({editor}), 3000);
                 }}
               >
-                Save Conference Info
+                {isSaved ? 'Saved' : 'Save Conference Info'}
               </button>
             </div>
           </div>
