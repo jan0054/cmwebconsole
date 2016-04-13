@@ -32,7 +32,7 @@ export default class Dashboard extends React.Component {
         data: {people, conferences, tracks, talks, locations, venues},
         editor
       },
-      actions: {logout, unmountPeopleEditor, mountPeopleEditor, clearIsSaved, getPeople, getConferences, setupConferenceEditor, clearConferenceEditor, addConference, saveConference, deleteConference, addTrack, saveTrack, deleteTrack, addLocation, saveLocation, deleteLocation, addTalk, saveTalk, deleteTalk, addVenue, saveVenue, deleteVenue, addAttendee, saveAttendee, deleteAttendee}
+      actions: {logout, unmountConferenceEditor, mountConferenceEditor, unmountPeopleEditor, mountPeopleEditor, clearIsSaved, getPeople, getConferences, setupConferenceEditor, clearConferenceEditor, addConference, saveConference, deleteConference, addTrack, saveTrack, deleteTrack, addLocation, saveLocation, deleteLocation, addTalk, saveTalk, deleteTalk, addVenue, saveVenue, deleteVenue, addAttendee, saveAttendee, deleteAttendee}
     } = this.props;
 
     return (
@@ -75,10 +75,14 @@ export default class Dashboard extends React.Component {
                     textDecoration: 'underline',
                     cursor: 'pointer'
                   }}
-                  onClick = {() => {
-                    setupConferenceEditor({conference});
+                  onClick = {async () => {
+                    unmountConferenceEditor();
+
+                    await setupConferenceEditor({conference});
 
                     clearConferenceEditor();
+
+                    mountConferenceEditor();
                   }}
                 >
                   {conference.get('name')}
@@ -111,6 +115,7 @@ export default class Dashboard extends React.Component {
               </li>
             </ul>
           </div>
+        {UI.showConferenceEditor &&
           <div
             className = 'columns small-9'
             style = {{
@@ -253,6 +258,7 @@ export default class Dashboard extends React.Component {
             </div>
           }
           </div>
+        }
         </main>
       </div>
     );

@@ -16,6 +16,7 @@ export default {
       },
 
       Dashboard: {
+        showConferenceEditor: true,
         showPeopleEditor: true
       }
     },

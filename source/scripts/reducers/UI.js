@@ -12,6 +12,16 @@ export default createReducers({
   },
 
   Dashboard: {
+    unmountConferenceEditor: ({showConferenceEditor, ...rest}, action) => ({
+      showConferenceEditor: false,
+      ...rest
+    }),
+
+    mountConferenceEditor: ({showConferenceEditor, ...rest}, action) => ({
+      showConferenceEditor: true,
+      ...rest
+    }),
+
     unmountPeopleEditor: ({showPeopleEditor, ...rest}, action) => ({
       showPeopleEditor: false,
       ...rest
