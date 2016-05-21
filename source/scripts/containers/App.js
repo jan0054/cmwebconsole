@@ -30,6 +30,7 @@ export default @connect(state => state, actions) class App extends React.Compone
     user: React.PropTypes.object.isRequired,
     data: React.PropTypes.object.isRequired,
     editor: React.PropTypes.object.isRequired,
+    persistLogin: React.PropTypes.func.isRequired,
     login: React.PropTypes.func.isRequired,
     logout: React.PropTypes.func.isRequired,
     unmountConferenceEditor: React.PropTypes.func.isRequired,
@@ -59,6 +60,12 @@ export default @connect(state => state, actions) class App extends React.Compone
     addAttendee: React.PropTypes.func.isRequired,
     saveAttendee: React.PropTypes.func.isRequired,
     deleteAttendee: React.PropTypes.func.isRequired
+  }
+
+  componentDidMount () {
+    const {persistLogin} = this.props;
+
+    persistLogin(Parse.User.current());
   }
 
   render () {

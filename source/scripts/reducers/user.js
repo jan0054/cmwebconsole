@@ -37,6 +37,8 @@ export default createReducers({
   },
 
   data: {
+    persistLogin: (state, action) => action.payload instanceof Parse.User ? action.payload : {},
+
     login: (state, action) => action.payload instanceof Parse.User ? action.payload : {},
 
     logout: (state, action) => ({})
