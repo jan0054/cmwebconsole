@@ -33,6 +33,8 @@ export default createReducers({
   isLoggedIn: {
     login: (state, action) => action.payload instanceof Parse.User,
 
+    signup: (state, action) => action.payload instanceof Parse.User,
+
     logout: (state, action) => false
   },
 
@@ -40,6 +42,8 @@ export default createReducers({
     persistLogin: (state, action) => action.payload instanceof Parse.User ? action.payload : {},
 
     login: (state, action) => action.payload instanceof Parse.User ? action.payload : {},
+
+    signup: (state, action) => action.payload instanceof Parse.User ? action.payload : {},
 
     logout: (state, action) => ({})
   }

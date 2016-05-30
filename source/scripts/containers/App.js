@@ -32,7 +32,10 @@ export default @connect(state => state, actions) class App extends React.Compone
     editor: React.PropTypes.object.isRequired,
     persistLogin: React.PropTypes.func.isRequired,
     login: React.PropTypes.func.isRequired,
+    signup: React.PropTypes.func.isRequired,
+    resetPassword: React.PropTypes.func.isRequired,
     logout: React.PropTypes.func.isRequired,
+    changeLoginFormMode: React.PropTypes.func.isRequired,
     unmountConferenceEditor: React.PropTypes.func.isRequired,
     mountConferenceEditor: React.PropTypes.func.isRequired,
     unmountPeopleEditor: React.PropTypes.func.isRequired,
@@ -74,7 +77,7 @@ export default @connect(state => state, actions) class App extends React.Compone
       user,
       data,
       editor,
-      login, logout, unmountConferenceEditor, mountConferenceEditor, unmountPeopleEditor, mountPeopleEditor, clearIsSaved, getPeople, getConferences, setupConferenceEditor, clearConferenceEditor, addConference, saveConference, deleteConference, addTrack, saveTrack, deleteTrack, addLocation, saveLocation, deleteLocation, addTalk, saveTalk, deleteTalk, addVenue, saveVenue, deleteVenue, addAttendee, saveAttendee, deleteAttendee
+      login, signup, resetPassword, logout, changeLoginFormMode, unmountConferenceEditor, mountConferenceEditor, unmountPeopleEditor, mountPeopleEditor, clearIsSaved, getPeople, getConferences, setupConferenceEditor, clearConferenceEditor, addConference, saveConference, deleteConference, addTrack, saveTrack, deleteTrack, addLocation, saveLocation, deleteLocation, addTalk, saveTalk, deleteTalk, addVenue, saveVenue, deleteVenue, addAttendee, saveAttendee, deleteAttendee
     } = this.props;
 
     return (
@@ -84,7 +87,13 @@ export default @connect(state => state, actions) class App extends React.Compone
           input = {{
             UI: UI.Login
           }}
-          onSubmit = {formData => login(formData)}
+          actions = {{changeLoginFormMode}}
+          onSubmit = {formData =>
+            UI.Login.mode === 'login' ? login(formData)
+          : UI.Login.mode === 'signup' ? signup(formData)
+          : UI.Login.mode === 'reset' ? resetPassword(formData)
+          : null
+          }
         />
 
       : !user.data.get('is_admin')

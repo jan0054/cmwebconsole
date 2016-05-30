@@ -30,6 +30,26 @@ export default createActions(
       }
     },
 
+    signup: async ({email, password, ...rest}) => {
+      try {
+        return await Parse.User.signUp(email, password, {
+          email,
+          is_admin: 1,
+          ...rest
+        });
+      } catch (error) {
+        return error;
+      }
+    },
+
+    resetPassword: async ({email}) => {
+      try {
+        return await Parse.User.requestPasswordReset(email);
+      } catch (error) {
+        return error;
+      }
+    },
+
     logout: async () => {
       try {
         await Parse.User.logOut();

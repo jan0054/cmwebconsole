@@ -12,6 +12,7 @@ export default {
   defaultState: {
     UI: {
       Login: {
+        mode: 'login',
         hasError: false
       },
 

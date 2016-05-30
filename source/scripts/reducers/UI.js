@@ -5,10 +5,20 @@ import {createReducers} from 'scripts/helpers';
 
 export default createReducers({
   Login: {
+    changeLoginFormMode: ({mode, ...rest}, action) => ({
+      mode: action.payload,
+      ...rest
+    }),
+
     login: ({hasError, ...rest}, action) => ({
       hasError: action.payload instanceof Parse.Error,
       ...rest
-    })
+    }),
+
+    resetPassword: ({hasError, ...rest}, action) => ({
+      hasError: 'reset',
+      ...rest
+    }),
   },
 
   Dashboard: {
