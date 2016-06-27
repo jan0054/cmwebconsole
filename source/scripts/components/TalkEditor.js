@@ -94,7 +94,7 @@ export default class TalkEditor extends React.Component {
                   />
                 </label>
               </div>
-              <div className = 'columns small-offset-1 small-2'>
+              <div className = 'columns small-offset-1 small-3'>
                 <label>Talk Start Time
                   <input
                     {..._startTime}
@@ -103,7 +103,7 @@ export default class TalkEditor extends React.Component {
                   />
                 </label>
               </div>
-              <div className = 'columns small-2 end'>
+              <div className = 'columns small-3 end'>
                 <label>Talk End Time
                   <input
                     {..._endTime}

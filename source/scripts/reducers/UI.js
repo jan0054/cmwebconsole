@@ -22,6 +22,11 @@ export default createReducers({
   },
 
   Dashboard: {
+    changeDashboardMode: ({mode, ...rest}, action) => ({
+      mode: action.payload,
+      ...rest
+    }),
+
     unmountConferenceEditor: ({showConferenceEditor, ...rest}, action) => ({
       showConferenceEditor: false,
       ...rest

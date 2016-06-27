@@ -90,7 +90,7 @@ export default class AnnouncementEditor extends React.Component {
                     setTimeout(() => clearIsSaved({editor}), 3000);
                   }}
                 >
-                  {isSaved ? 'Saved' : 'Save Announcement Info'}
+                  {isSaved ? 'Saved' : 'Save Announcement'}
                 </button>
               </div>
             </div>

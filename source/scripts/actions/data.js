@@ -14,6 +14,16 @@ export default createActions(
       }
     },
 
+    getCareers: async ({user}) => {
+      try {
+        return await (new Parse.Query('Career')).equalTo('author', user)
+                                                .ascending('createdAt')
+                                                .find();
+      } catch (error) {
+        return error;
+      }
+    },
+
     getPeople: async () => {
       try {
         return await (new Parse.Query('Person').ascending('last_name')

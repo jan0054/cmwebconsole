@@ -36,6 +36,7 @@ export default @connect(state => state, actions) class App extends React.Compone
     resetPassword: React.PropTypes.func.isRequired,
     logout: React.PropTypes.func.isRequired,
     changeLoginFormMode: React.PropTypes.func.isRequired,
+    changeDashboardMode: React.PropTypes.func.isRequired,
     unmountConferenceEditor: React.PropTypes.func.isRequired,
     mountConferenceEditor: React.PropTypes.func.isRequired,
     unmountPeopleEditor: React.PropTypes.func.isRequired,
@@ -43,11 +44,15 @@ export default @connect(state => state, actions) class App extends React.Compone
     clearIsSaved: React.PropTypes.func.isRequired,
     getPeople: React.PropTypes.func.isRequired,
     getConferences: React.PropTypes.func.isRequired,
+    getCareers: React.PropTypes.func.isRequired,
     setupConferenceEditor: React.PropTypes.func.isRequired,
     clearConferenceEditor: React.PropTypes.func.isRequired,
     addConference: React.PropTypes.func.isRequired,
     saveConference: React.PropTypes.func.isRequired,
     deleteConference: React.PropTypes.func.isRequired,
+    addCareer: React.PropTypes.func.isRequired,
+    saveCareer: React.PropTypes.func.isRequired,
+    deleteCareer: React.PropTypes.func.isRequired,
     addTrack: React.PropTypes.func.isRequired,
     saveTrack: React.PropTypes.func.isRequired,
     deleteTrack: React.PropTypes.func.isRequired,
@@ -80,7 +85,7 @@ export default @connect(state => state, actions) class App extends React.Compone
       user,
       data,
       editor,
-      login, signup, resetPassword, logout, changeLoginFormMode, unmountConferenceEditor, mountConferenceEditor, unmountPeopleEditor, mountPeopleEditor, clearIsSaved, getPeople, getConferences, setupConferenceEditor, clearConferenceEditor, addConference, saveConference, deleteConference, addTrack, saveTrack, deleteTrack, addLocation, saveLocation, deleteLocation, addTalk, saveTalk, deleteTalk, addVenue, saveVenue, deleteVenue, addAnnouncement, saveAnnouncement, deleteAnnouncement, addAttendee, saveAttendee, deleteAttendee
+      login, signup, resetPassword, logout, changeLoginFormMode, changeDashboardMode, unmountConferenceEditor, mountConferenceEditor, unmountPeopleEditor, mountPeopleEditor, clearIsSaved, getPeople, getConferences, getCareers, setupConferenceEditor, clearConferenceEditor, addConference, saveConference, deleteConference, addCareer, saveCareer, deleteCareer, addTrack, saveTrack, deleteTrack, addLocation, saveLocation, deleteLocation, addTalk, saveTalk, deleteTalk, addVenue, saveVenue, deleteVenue, addAnnouncement, saveAnnouncement, deleteAnnouncement, addAttendee, saveAttendee, deleteAttendee
     } = this.props;
 
     return (
@@ -111,7 +116,7 @@ export default @connect(state => state, actions) class App extends React.Compone
             data,
             editor
           }}
-          actions = {{logout, unmountConferenceEditor, mountConferenceEditor, unmountPeopleEditor, mountPeopleEditor, clearIsSaved, getPeople, getConferences, setupConferenceEditor, clearConferenceEditor, addConference, saveConference, deleteConference, addTrack, saveTrack, deleteTrack, addLocation, saveLocation, deleteLocation, addTalk, saveTalk, deleteTalk, addVenue, saveVenue, deleteVenue, addAnnouncement, saveAnnouncement, deleteAnnouncement, addAttendee, saveAttendee, deleteAttendee}}
+          actions = {{logout, changeDashboardMode, unmountConferenceEditor, mountConferenceEditor, unmountPeopleEditor, mountPeopleEditor, clearIsSaved, getPeople, getConferences, getCareers, setupConferenceEditor, clearConferenceEditor, addConference, saveConference, deleteConference, addCareer, saveCareer, deleteCareer, addTrack, saveTrack, deleteTrack, addLocation, saveLocation, deleteLocation, addTalk, saveTalk, deleteTalk, addVenue, saveVenue, deleteVenue, addAnnouncement, saveAnnouncement, deleteAnnouncement, addAttendee, saveAttendee, deleteAttendee}}
         />
       }
       </div>

@@ -10,6 +10,10 @@ export default createReducers({
     getConferences: (state, action) => action.payload
   },
 
+  careers: {
+    getCareers: (state, action) => action.payload
+  },
+
   tracks: {
     setupConferenceEditor: (state, action) => action.payload.tracks
   },

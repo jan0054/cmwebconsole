@@ -17,6 +17,7 @@ export default {
       },
 
       Dashboard: {
+        mode: 'announcements',
         showConferenceEditor: true,
         showPeopleEditor: true
       }
@@ -30,6 +31,7 @@ export default {
     data: {
       people: [],
       conferences: [],
+      careers: [],
       tracks: [],
       locations: [],
       talks: [],
@@ -40,7 +42,8 @@ export default {
     editor: {
       conference: {
         id: '',
-        isSaved: false
+        isSaved: false,
+        isCareer: false
       },
       tracks: [],
       locations: [],

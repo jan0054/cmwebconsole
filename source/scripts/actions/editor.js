@@ -4,30 +4,44 @@ import {createActions} from 'scripts/helpers';
 
 export default createActions(
   {
-    setupConferenceEditor: async ({conference}) => {
+    setupConferenceEditor: async ({conference, career}, mode) => {
       try {
-        return {
-          conference,
+        if (mode === 'career') {
+          return {
+            conference: career,
 
-          tracks: await (new Parse.Query('Session')).equalTo('event', conference)
-                                                    .ascending('createdAt')
-                                                    .find(),
+            isCareer: true,
 
-          talks: await (new Parse.Query('Talk')).equalTo('event', conference)
-                                                .ascending('createdAt')
-                                                .find(),
+            tracks: [],
+            talks: [],
+            locations: [],
+            venues: [],
+            announcements: []
+          };
+        } else {
+          return {
+            conference,
 
-          locations: await (new Parse.Query('Location')).equalTo('event', conference)
-                                                        .find(),
+            tracks: await (new Parse.Query('Session')).equalTo('event', conference)
+                                                      .ascending('createdAt')
+                                                      .find(),
 
-          venues: await (new Parse.Query('Venue')).equalTo('event', conference)
+            talks: await (new Parse.Query('Talk')).equalTo('event', conference)
                                                   .ascending('createdAt')
                                                   .find(),
 
-          announcements: await (new Parse.Query('Announcement')).equalTo('event', conference)
-                                                                .ascending('createdAt')
-                                                                .find(),
-        };
+            locations: await (new Parse.Query('Location')).equalTo('event', conference)
+                                                          .find(),
+
+            venues: await (new Parse.Query('Venue')).equalTo('event', conference)
+                                                    .ascending('createdAt')
+                                                    .find(),
+
+            announcements: await (new Parse.Query('Announcement')).equalTo('event', conference)
+                                                                  .ascending('createdAt')
+                                                                  .find()
+          };
+        }
       } catch (error) {
         return error;
       }
@@ -67,6 +81,30 @@ export default createActions(
     deleteConference: async ({conference}) => {
       try {
         return await conference.destroy();
+      } catch (error) {
+        return error;
+      }
+    },
+
+    addCareer: async ({fields}) => {
+      try {
+        return await new (Parse.Object.extend('Career'))().save(fields);
+      } catch (error) {
+        return error;
+      }
+    },
+
+    saveCareer: async ({career, fields}) => {
+      try {
+        return await career.save(fields);
+      } catch (error) {
+        return error;
+      }
+    },
+
+    deleteCareer: async ({career}) => {
+      try {
+        return await career.destroy();
       } catch (error) {
         return error;
       }

@@ -5,7 +5,8 @@ export default createReducers({
   conference: {
     setupConferenceEditor: (state, action) => ({
       id: action.payload.conference.id,
-      isSaved: false
+      isSaved: false,
+      isCareer: !!action.payload.isCareer
     }),
 
     saveConference: (state, action) => ({
@@ -15,7 +16,19 @@ export default createReducers({
 
     deleteConference: (state, action) => ({
       id: '',
-      isSaved: false
+      isSaved: false,
+      isCareer: false
+    }),
+
+    saveCareer: (state, action) => ({
+      ...state,
+      isSaved: true
+    }),
+
+    deleteCareer: (state, action) => ({
+      id: '',
+      isSaved: false,
+      isCareer: false
     }),
 
     clearIsSaved: (state, action) => ({
