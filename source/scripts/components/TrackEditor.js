@@ -7,7 +7,7 @@ import {defaultFormValues} from 'scripts/configs';
 
 @connectForm({
   form: 'TrackEditor',
-  fields: ['_trackName', '_startDate', '_endDate', '_locationName', 'capacity'],
+  fields: ['_trackName', '_startDate', '_endDate'],
   initialValues: defaultFormValues.TrackEditor
 })
 export default class TrackEditor extends React.Component {
@@ -29,7 +29,7 @@ export default class TrackEditor extends React.Component {
         editor
       },
       actions: {clearIsSaved, saveTrack, deleteTrack, saveLocation, deleteLocation, addTalk, deleteTalk, setupConferenceEditor},
-      fields: {_trackName, _startDate, _endDate, _locationName, capacity},
+      fields: {_trackName, _startDate, _endDate},
       children
     } = this.props;
 
@@ -83,28 +83,6 @@ export default class TrackEditor extends React.Component {
               </div>
             </div>
             <div className = 'row'>
-              <div className = 'columns'>
-                <label>Location Name
-                  <input
-                    {..._locationName}
-                    type = 'text'
-                    value = {_locationName.touched ? _locationName.value : location.get('name')}
-                  />
-                </label>
-              </div>
-            </div>
-            <div className = 'row'>
-              <div className = 'columns'>
-                <label>Location Capacity
-                  <input
-                    {...capacity}
-                    type = 'number'
-                    value = {capacity.touched ? capacity.value : location.get('capacity')}
-                  />
-                </label>
-              </div>
-            </div>
-            <div className = 'row'>
               <div className = 'columns small-offset-6 small-6 expanded button-group'>
                 <button
                   className = 'alert button'
@@ -131,6 +109,7 @@ export default class TrackEditor extends React.Component {
                   onClick = {event => {
                     event.preventDefault();
 
+/*
                     saveLocation({
                       location,
 
@@ -140,6 +119,7 @@ export default class TrackEditor extends React.Component {
                         event: conference
                       }
                     });
+*/
 
                     saveTrack({
                       track,

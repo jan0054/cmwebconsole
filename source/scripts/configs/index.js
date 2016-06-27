@@ -33,7 +33,8 @@ export default {
       tracks: [],
       locations: [],
       talks: [],
-      venues: []
+      venues: [],
+      announcements: []
     },
 
     editor: {
@@ -45,6 +46,7 @@ export default {
       locations: [],
       talks: [],
       venues: [],
+      announcements: [],
       people: {
         isSaved: false
       }
@@ -90,6 +92,10 @@ export default {
       address: '',
       phone: '',
       url: '',
+      content: ''
+    },
+
+    AnnouncementEditor: {
       content: ''
     },
 

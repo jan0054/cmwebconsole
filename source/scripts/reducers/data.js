@@ -24,5 +24,9 @@ export default createReducers({
 
   venues: {
     setupConferenceEditor: (state, action) => action.payload.venues
+  },
+
+  announcements: {
+    setupConferenceEditor: (state, action) => action.payload.announcements
   }
 }, defaultState.data);

@@ -108,6 +108,27 @@ export default createReducers({
     }))
   },
 
+  announcements: {
+    setupConferenceEditor: (state, action) => action.payload.announcements.map(announcement => ({
+      id: announcement.id,
+      isSaved: false
+    })),
+
+    saveAnnouncement: (state, action) => state.map(announcement =>
+        announcement.id === action.payload.id
+      ? {
+        ...announcement,
+        isSaved: true
+      }
+      : announcement
+    ),
+
+    clearIsSaved: (state, action) => action.payload.editor.announcements.map(announcement => ({
+      id: announcement.id,
+      isSaved: false
+    }))
+  },
+
   people: {
     setupConferenceEditor: (state, action) => ({
       isSaved: false

@@ -7,7 +7,7 @@ import {defaultFormValues} from 'scripts/configs';
 
 @connectForm({
   form: 'TalkEditor',
-  fields: ['name', '_authorId', '_date', '_startTime', '_endTime', 'content'],
+  fields: ['name', '_authorId', '_date', '_startTime', '_endTime', 'location_name', 'content'],
   initialValues: defaultFormValues.TalkEditor
 })
 export default class TalkEditor extends React.Component {
@@ -25,7 +25,7 @@ export default class TalkEditor extends React.Component {
         editor
       },
       actions: {clearIsSaved, deleteTalk, saveTalk, setupConferenceEditor},
-      fields: {name, _authorId, _date, _startTime, _endTime, content}
+      fields: {name, _authorId, _date, _startTime, _endTime, location_name, content}
     } = this.props;
 
     const conference = conferences.find(conference => conference.id === editor.conference.id);
@@ -115,6 +115,17 @@ export default class TalkEditor extends React.Component {
             </div>
             <div className = 'row'>
               <div className = 'columns'>
+                <label>Location Name
+                  <input
+                    {...location_name}
+                    type = 'text'
+                    value = {location_name.touched ? location_name.value : talk.get('location_name')}
+                  />
+                </label>
+              </div>
+            </div>
+            <div className = 'row'>
+              <div className = 'columns'>
                 <label>Talk Summary
                   <textarea
                     {...content}
@@ -161,6 +172,7 @@ export default class TalkEditor extends React.Component {
                         event: conference,
                         session: track,
                         location,
+                        location_name: location_name.value,
                         type: 0
                       }
                     });

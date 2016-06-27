@@ -22,7 +22,11 @@ export default createActions(
 
           venues: await (new Parse.Query('Venue')).equalTo('event', conference)
                                                   .ascending('createdAt')
-                                                  .find()
+                                                  .find(),
+
+          announcements: await (new Parse.Query('Announcement')).equalTo('event', conference)
+                                                                .ascending('createdAt')
+                                                                .find(),
         };
       } catch (error) {
         return error;
@@ -159,6 +163,30 @@ export default createActions(
     deleteVenue: async ({venue}) => {
       try {
         return await venue.destroy();
+      } catch (error) {
+        return error;
+      }
+    },
+
+    addAnnouncement: async ({fields}) => {
+      try {
+        return await new (Parse.Object.extend('Announcement'))().save(fields);
+      } catch (error) {
+        return error;
+      }
+    },
+
+    saveAnnouncement: async ({announcement, fields}) => {
+      try {
+        return await announcement.save(fields);
+      } catch (error) {
+        return error;
+      }
+    },
+
+    deleteAnnouncement: async ({announcement}) => {
+      try {
+        return await announcement.destroy();
       } catch (error) {
         return error;
       }

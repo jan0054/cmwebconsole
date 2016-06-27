@@ -60,6 +60,9 @@ export default @connect(state => state, actions) class App extends React.Compone
     addVenue: React.PropTypes.func.isRequired,
     saveVenue: React.PropTypes.func.isRequired,
     deleteVenue: React.PropTypes.func.isRequired,
+    addAnnouncement: React.PropTypes.func.isRequired,
+    saveAnnouncement: React.PropTypes.func.isRequired,
+    deleteAnnouncement: React.PropTypes.func.isRequired,
     addAttendee: React.PropTypes.func.isRequired,
     saveAttendee: React.PropTypes.func.isRequired,
     deleteAttendee: React.PropTypes.func.isRequired
@@ -77,7 +80,7 @@ export default @connect(state => state, actions) class App extends React.Compone
       user,
       data,
       editor,
-      login, signup, resetPassword, logout, changeLoginFormMode, unmountConferenceEditor, mountConferenceEditor, unmountPeopleEditor, mountPeopleEditor, clearIsSaved, getPeople, getConferences, setupConferenceEditor, clearConferenceEditor, addConference, saveConference, deleteConference, addTrack, saveTrack, deleteTrack, addLocation, saveLocation, deleteLocation, addTalk, saveTalk, deleteTalk, addVenue, saveVenue, deleteVenue, addAttendee, saveAttendee, deleteAttendee
+      login, signup, resetPassword, logout, changeLoginFormMode, unmountConferenceEditor, mountConferenceEditor, unmountPeopleEditor, mountPeopleEditor, clearIsSaved, getPeople, getConferences, setupConferenceEditor, clearConferenceEditor, addConference, saveConference, deleteConference, addTrack, saveTrack, deleteTrack, addLocation, saveLocation, deleteLocation, addTalk, saveTalk, deleteTalk, addVenue, saveVenue, deleteVenue, addAnnouncement, saveAnnouncement, deleteAnnouncement, addAttendee, saveAttendee, deleteAttendee
     } = this.props;
 
     return (
@@ -108,7 +111,7 @@ export default @connect(state => state, actions) class App extends React.Compone
             data,
             editor
           }}
-          actions = {{logout, unmountConferenceEditor, mountConferenceEditor, unmountPeopleEditor, mountPeopleEditor, clearIsSaved, getPeople, getConferences, setupConferenceEditor, clearConferenceEditor, addConference, saveConference, deleteConference, addTrack, saveTrack, deleteTrack, addLocation, saveLocation, deleteLocation, addTalk, saveTalk, deleteTalk, addVenue, saveVenue, deleteVenue, addAttendee, saveAttendee, deleteAttendee}}
+          actions = {{logout, unmountConferenceEditor, mountConferenceEditor, unmountPeopleEditor, mountPeopleEditor, clearIsSaved, getPeople, getConferences, setupConferenceEditor, clearConferenceEditor, addConference, saveConference, deleteConference, addTrack, saveTrack, deleteTrack, addLocation, saveLocation, deleteLocation, addTalk, saveTalk, deleteTalk, addVenue, saveVenue, deleteVenue, addAnnouncement, saveAnnouncement, deleteAnnouncement, addAttendee, saveAttendee, deleteAttendee}}
         />
       }
       </div>

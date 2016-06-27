@@ -6,6 +6,7 @@ import ConferenceEditor from 'scripts/components/ConferenceEditor';
 import TrackEditor from 'scripts/components/TrackEditor';
 import TalkEditor from 'scripts/components/TalkEditor';
 import VenueEditor from 'scripts/components/VenueEditor';
+import AnnouncementEditor from 'scripts/components/AnnouncementEditor';
 import PeopleEditor from 'scripts/components/PeopleEditor';
 
 export default class Dashboard extends React.Component {
@@ -29,10 +30,10 @@ export default class Dashboard extends React.Component {
       input: {
         UI,
         user,
-        data: {people, conferences, tracks, talks, locations, venues},
+        data: {people, conferences, tracks, talks, locations, venues, announcements},
         editor
       },
-      actions: {logout, unmountConferenceEditor, mountConferenceEditor, unmountPeopleEditor, mountPeopleEditor, clearIsSaved, getPeople, getConferences, setupConferenceEditor, clearConferenceEditor, addConference, saveConference, deleteConference, addTrack, saveTrack, deleteTrack, addLocation, saveLocation, deleteLocation, addTalk, saveTalk, deleteTalk, addVenue, saveVenue, deleteVenue, addAttendee, saveAttendee, deleteAttendee}
+      actions: {logout, unmountConferenceEditor, mountConferenceEditor, unmountPeopleEditor, mountPeopleEditor, clearIsSaved, getPeople, getConferences, setupConferenceEditor, clearConferenceEditor, addConference, saveConference, deleteConference, addTrack, saveTrack, deleteTrack, addLocation, saveLocation, deleteLocation, addTalk, saveTalk, deleteTalk, addVenue, saveVenue, deleteVenue, addAnnouncement, saveAnnouncement, deleteAnnouncement, addAttendee, saveAttendee, deleteAttendee}
     } = this.props;
 
     return (
@@ -239,6 +240,45 @@ export default class Dashboard extends React.Component {
                   editor
                 }}
                 actions = {{clearIsSaved, saveVenue, deleteVenue, setupConferenceEditor}}
+              />
+            )}
+              <hr />
+              <h3>Edit Conference Announcements</h3>
+              <div className = 'row'>
+                <div className = 'columns small-3 end'>
+                  <button
+                    className = 'expanded secondary button'
+                    onClick = {async event => {
+                      event.preventDefault();
+
+                      const conference = conferences.find(conference => conference.id === editor.conference.id);
+
+                      await addAnnouncement({
+                        fields: {
+                          event: conference
+                        }
+                      });
+
+                      setupConferenceEditor({conference});
+                    }}
+                  >
+                    Add Announcement
+                  </button>
+                </div>
+              </div>
+            {announcements.map(announcement =>
+              <AnnouncementEditor
+                key = {announcement.id}
+                formKey = {announcement.id}
+                input = {{
+                  user,
+                  data: {
+                    conferences,
+                    announcement
+                  },
+                  editor
+                }}
+                actions = {{clearIsSaved, saveAnnouncement, deleteAnnouncement, setupConferenceEditor}}
               />
             )}
               <hr />
