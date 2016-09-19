@@ -37,7 +37,7 @@ export default @connect(state => state, actions) class App extends React.Compone
     const {
       data
     } = this.props;
-
+console.log(data);
     return (
       <div>
         <div className = 'row'>
@@ -53,12 +53,28 @@ export default @connect(state => state, actions) class App extends React.Compone
         <div className = 'row'>
           <div className = 'columns small-8 small-centered'>
           {data.apps.map(app =>
-            <a
-              className = 'expanded large button'
-              href = {`http://jan0054.github.io/cmwebconsole/?name=${app.get('name')}&id=${app.get('app_id')}&key=${app.get('js_key')}`}
+            <div
+              key = {app.get('app_id')}
+              className = 'row'
             >
-              {app.get('name')}
-            </a>
+              <div className = 'columns small-1'>
+                <img
+                  style = {{
+                    width: 56,
+                    maxWidth: 'inherit'
+                  }}
+                  src = {app.get('icon').url()}
+                />
+              </div>
+              <div className = 'columns small-11'>
+                <a
+                  className = 'expanded large button'
+                  href = {`http://jan0054.github.io/cmwebconsole/?name=${app.get('name')}&id=${app.get('app_id')}&key=${app.get('js_key')}`}
+                >
+                  {app.get('name')}
+                </a>
+              </div>
+            </div>
           )}
           </div>
         </div>
