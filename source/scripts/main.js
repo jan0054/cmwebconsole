@@ -25,7 +25,15 @@ import {reduceToObject} from 'scripts/helpers';
 import * as reducers from 'scripts/reducers';
 import App from 'scripts/containers/App';
 
-Parse.initialize('2JF8yrgsM5H261Gju4rzKfxFurDZluOfWUq9UnCV', 'xlirVc4ZbYnah6b97WEo4mbOUBvi0RiqZj5GJ9Hi');
+function getURLParameter(name) {
+  const results = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)').exec(window.location.href);
+
+  return !results ? null :
+         !results[2] ? '' :
+         decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+Parse.initialize(getURLParameter('id'), getURLParameter('key'));
 
 // Configure Redux Store
 // ---------------------
@@ -71,7 +79,7 @@ function configureStore (initialState) {
 
 render(
   <Provider store = {configureStore()}>
-    <App/>
+    <App name = {getURLParameter('name')} />
   </Provider>,
 
   document.getElementById('app')

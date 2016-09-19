@@ -26,6 +26,7 @@ import Support from 'scripts/components/Support';
 
 export default @connect(state => state, actions) class App extends React.Component {
   static propTypes = {
+    name: React.PropTypes.string.isRequired,
     UI: React.PropTypes.object.isRequired,
     user: React.PropTypes.object.isRequired,
     data: React.PropTypes.object.isRequired,
@@ -81,6 +82,7 @@ export default @connect(state => state, actions) class App extends React.Compone
 
   render () {
     const {
+      name,
       UI,
       user,
       data,
@@ -93,6 +95,7 @@ export default @connect(state => state, actions) class App extends React.Compone
       { !(user.data instanceof Parse.User)
       ? <Login
           input = {{
+            name,
             UI: UI.Login
           }}
           actions = {{changeLoginFormMode}}

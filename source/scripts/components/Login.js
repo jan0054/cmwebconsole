@@ -44,7 +44,7 @@ class Login extends React.Component {
 
   render () {
     const {
-      input: {UI},
+      input: {name, UI},
       actions: {changeLoginFormMode},
       fields: {email, password, first_name, last_name, institution},
       handleSubmit
@@ -67,7 +67,7 @@ class Login extends React.Component {
               style = {{
                 margin: '60px 0 60px 0'
               }}
-            >Colloquium.me Admin Dashboard</h1>
+            >{name} Admin Dashboard</h1>
           </div>
         </div>
         <div className = 'row'>
