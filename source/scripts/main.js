@@ -14,7 +14,7 @@ import {render} from 'react-dom';
 import {compose, applyMiddleware, createStore, combineReducers} from 'redux';
 import ReduxPromise from 'redux-promise';
 import createLogger from 'redux-logger';
-import {reducer as formReducer} from 'redux-form';
+//import {reducer as formReducer} from 'redux-form';
 import {Provider} from 'react-redux';
 import Parse from 'parse';
 
@@ -25,7 +25,7 @@ import {reduceToObject} from 'scripts/helpers';
 import * as reducers from 'scripts/reducers';
 import App from 'scripts/containers/App';
 
-Parse.initialize('2JF8yrgsM5H261Gju4rzKfxFurDZluOfWUq9UnCV', 'xlirVc4ZbYnah6b97WEo4mbOUBvi0RiqZj5GJ9Hi');
+Parse.initialize('yGUSouDXykmrUW3BsIqy1x6vLVkWAQpK1jfJysOl', '8w3tKiUSBPvENZ2r59IAsd9GkfYmK52P48g7T8yw');
 
 // Configure Redux Store
 // ---------------------
@@ -53,11 +53,7 @@ function configureStore (initialState) {
     createStore
   )(
     combineReducers(
-      defaultState::reduceToObject((_, stateName) => combineReducers(reducers[stateName]), {
-        form: formReducer.plugin({
-          ConferenceEditor: reducers.form.ConferenceEditor
-        })
-      })
+      defaultState::reduceToObject((_, stateName) => combineReducers(reducers[stateName]))
     ),
 
     initialState

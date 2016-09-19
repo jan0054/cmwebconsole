@@ -4,31 +4,9 @@ import {createActions} from 'scripts/helpers';
 
 export default createActions(
   {
-    getConferences: async ({user}) => {
+    getApps: async () => {
       try {
-        return await (new Parse.Query('Event')).equalTo('admin', user)
-                                               .ascending('start_time')
-                                               .find();
-      } catch (error) {
-        return error;
-      }
-    },
-
-    getCareers: async ({user}) => {
-      try {
-        return await (new Parse.Query('Career')).equalTo('author', user)
-                                                .ascending('createdAt')
-                                                .find();
-      } catch (error) {
-        return error;
-      }
-    },
-
-    getPeople: async () => {
-      try {
-        return await (new Parse.Query('Person').ascending('last_name')
-                                               .limit(1000))
-                                               .find();
+        return await (new Parse.Query('Cm_apps')).find();
       } catch (error) {
         return error;
       }
